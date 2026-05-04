@@ -1,0 +1,15 @@
+# Large dataset files
+data/combined_data.csv
+data/spam_processed.csv
+
+# Model files (too large)
+models/*.pkl
+notebooks/models/*.pkl
+
+# Python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/

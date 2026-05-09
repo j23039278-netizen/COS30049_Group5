@@ -56,7 +56,7 @@ ThreatInk is a machine learning-powered spam message detection system that class
 | | **Total** | | **~94,748** |
 
 > **Note:** `combined_data.csv` is not included in the GitHub repository due to file size (133MB).
-> Download it from: https://www.kaggle.com/datasets/meruvulikith/190k-spam-or-not-spam-dataset
+> Download it from: https://www.kaggle.com/datasets/meruvulikith/190k-spam-ham-email-dataset-for-classification
 > Place it in the `data/` folder before running the notebook.
 
 ---

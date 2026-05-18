@@ -120,45 +120,58 @@ export default function Dashboard() {
         </Typography>
 
         {/* Summary Cards */}
-        <Grid container spacing={2} sx={{ mb: 4 }}>
+        <Box sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 2,
+          mb: 4,
+        }}>
           {[
             { label: "Total Records", value: stats.class_distribution.total.toLocaleString(), color: "#42a5f5" },
             { label: "Spam Messages", value: stats.class_distribution.spam.toLocaleString(), color: "#ef5350" },
             { label: "Ham Messages", value: stats.class_distribution.ham.toLocaleString(), color: "#66bb6a" },
             { label: "Best Accuracy", value: "97.46%", color: "#ffa726" },
           ].map((s) => (
-            <Grid item xs={6} md={3} key={s.label}>
-              <Card sx={{
+            <Card
+              key={s.label}
+              sx={{
                 bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
                 border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
                 textAlign: "center",
                 py: 2,
+                px: 3,
+                flex: "1 1 auto",
+                minWidth: { xs: "calc(50% - 8px)", sm: "calc(50% - 8px)", md: "auto" },
+                maxWidth: { md: 200 },
                 transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  transform: "translateY(-6px)",
                   boxShadow: isDark
-                    ? "0 8px 16px rgba(0,0,0,0.3)"
-                    : "0 8px 16px rgba(0,0,0,0.1)",
+                    ? "0 12px 24px rgba(0,0,0,0.3)"
+                    : "0 12px 24px rgba(0,0,0,0.1)",
                 },
-              }}>
-                <Typography variant="h5" fontWeight={800} sx={{ color: s.color }}>{s.value}</Typography>
-                <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{s.label}</Typography>
-              </Card>
-            </Grid>
+              }}
+            >
+              <Typography variant="h5" fontWeight={800} sx={{ color: s.color }}>{s.value}</Typography>
+              <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{s.label}</Typography>
+            </Card>
           ))}
-        </Grid>
+        </Box>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {/* Chart 1: Pie - Class Distribution */}
           <Grid item xs={12} md={6}>
-            <Card sx={{
+            <Card sx{{
               bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
               border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
-              height: 400,
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
             }}>
-              <CardContent>
+              <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Class Distribution</Typography>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
                     <Pie
                       data={classData}
@@ -187,14 +200,16 @@ export default function Dashboard() {
             <Card sx={{
               bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
               border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
-              height: 400,
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
             }}>
-              <CardContent>
+              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Comparison</Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={modelData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={modelData} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                    <XAxis dataKey="name" tick={{ fill: textColor, fontSize: 10 }} />
+                    <XAxis dataKey="name" tick={{ fill: textColor, fontSize: 11 }} angle={-45} textAnchor="end" height={80} />
                     <YAxis domain={[0.9, 1]} tick={{ fill: textColor, fontSize: 11 }} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
                     <Tooltip content={<CustomTooltip isDark={isDark} />} />
                     <Legend wrapperStyle={{ color: textColor }} />
@@ -212,15 +227,17 @@ export default function Dashboard() {
             <Card sx={{
               bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
               border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
-              height: 400,
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
             }}>
-              <CardContent>
+              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Top Spam Keywords</Typography>
-                <ResponsiveContainer width="100%" height={310}>
-                  <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 80, bottom: 5 }}>
+                <ResponsiveContainer width="100%" height={360}>
+                  <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 120, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
                     <XAxis type="number" tick={{ fill: textColor, fontSize: 11 }} />
-                    <YAxis dataKey="keyword" type="category" tick={{ fill: textColor, fontSize: 12 }} width={75} />
+                    <YAxis dataKey="keyword" type="category" tick={{ fill: textColor, fontSize: 12 }} width={110} />
                     <Tooltip content={<CustomTooltip isDark={isDark} />} />
                     <Legend wrapperStyle={{ color: textColor }} />
                     <Bar dataKey="Spam" fill="#ef5350" radius={[0, 4, 4, 0]} />
@@ -236,14 +253,16 @@ export default function Dashboard() {
             <Card sx={{
               bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
               border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
-              height: 400,
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
             }}>
-              <CardContent>
+              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Radar</Typography>
-                <ResponsiveContainer width="100%" height={310}>
+                <ResponsiveContainer width="100%" height={360}>
                   <RadarChart data={radarData}>
                     <PolarGrid stroke={gridColor} />
-                    <PolarAngleAxis dataKey="model" tick={{ fill: textColor, fontSize: 11 }} />
+                    <PolarAngleAxis dataKey="model" tick={{ fill: textColor, fontSize: 12 }} />
                     <PolarRadiusAxis domain={[90, 100]} tick={{ fill: textColor, fontSize: 10 }} />
                     <Radar name="Accuracy" dataKey="Accuracy" stroke="#42a5f5" fill="#42a5f5" fillOpacity={0.2} />
                     <Radar name="F1" dataKey="F1" stroke="#66bb6a" fill="#66bb6a" fillOpacity={0.2} />

@@ -41,7 +41,7 @@ export default function About() {
           spam or legitimate using multiple ML models and provides risk scoring.
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {/* Project Info */}
           <Grid item xs={12} md={6}>
             <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", height: "100%" }}>
@@ -88,44 +88,52 @@ export default function About() {
           </Grid>
 
           {/* Model Performance */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12}>
             <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance</Typography>
-                {modelPerf.map((m) => (
-                  <Box key={m.name} sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1.5, p: 1.5, borderRadius: 2, bgcolor: m.best ? "rgba(239,83,80,0.08)" : "rgba(255,255,255,0.03)", border: m.best ? "1px solid rgba(239,83,80,0.3)" : "1px solid transparent" }}>
-                    <Box sx={{ flex: 1 }}>
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Typography variant="body2" fontWeight={600}>{m.name}</Typography>
-                        {m.best && <Chip label="Best" size="small" color="error" sx={{ height: 18, fontSize: "0.65rem" }} />}
+                <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Model Performance</Typography>
+                <Grid container spacing={2}>
+                  {modelPerf.map((m) => (
+                    <Grid item xs={12} sm={6} md={3} key={m.name}>
+                      <Box sx={{ p: 2, borderRadius: 2, bgcolor: m.best ? "rgba(239,83,80,0.1)" : "rgba(255,255,255,0.04)", border: m.best ? "1px solid rgba(239,83,80,0.4)" : "1px solid rgba(255,255,255,0.1)", textAlign: "center" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
+                          <Typography variant="body2" fontWeight={700}>{m.name}</Typography>
+                          {m.best && <Chip label="Best" size="small" color="error" sx={{ height: 18, fontSize: "0.65rem" }} />}
+                        </Box>
+                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>Accuracy</Typography>
+                        <Typography variant="body2" fontWeight={700} sx={{ color: "#42a5f5", mb: 1 }}>{m.accuracy}</Typography>
+                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>F1 Score</Typography>
+                        <Typography variant="body2" fontWeight={700} sx={{ color: "#66bb6a", mb: 1 }}>{m.f1}</Typography>
+                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>ROC-AUC</Typography>
+                        <Typography variant="body2" fontWeight={700} sx={{ color: "#ffa726" }}>{m.roc}</Typography>
                       </Box>
-                    </Box>
-                    <Typography variant="caption" color="grey.400">Acc: <b style={{ color: "#fff" }}>{m.accuracy}</b></Typography>
-                    <Typography variant="caption" color="grey.400">F1: <b style={{ color: "#fff" }}>{m.f1}</b></Typography>
-                  </Box>
-                ))}
+                    </Grid>
+                  ))}
               </CardContent>
             </Card>
           </Grid>
 
           {/* Tech Stack */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12}>
             <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Tech Stack</Typography>
-                {techStack.map((t) => (
-                  <Box key={t.category} sx={{ mb: 2 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-                      <Box sx={{ color: "primary.main" }}>{t.icon}</Box>
-                      <Typography variant="body2" fontWeight={700}>{t.category}</Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {t.items.map((item) => (
-                        <Chip key={item} label={item} size="small" sx={{ bgcolor: "rgba(66,165,245,0.1)", color: "#42a5f5", fontSize: "0.7rem" }} />
-                      ))}
-                    </Box>
-                  </Box>
-                ))}
+                <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Tech Stack</Typography>
+                <Grid container spacing={3}>
+                  {techStack.map((t) => (
+                    <Grid item xs={12} sm={6} md={3} key={t.category}>
+                      <Box sx={{ p: 2, borderRadius: 2, bgcolor: "rgba(66,165,245,0.08)", border: "1px solid rgba(66,165,245,0.2)", height: "100%" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                          <Box sx={{ color: "#42a5f5", fontSize: "1.5rem" }}>{t.icon}</Box>
+                          <Typography variant="body2" fontWeight={700}>{t.category}</Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                          {t.items.map((item) => (
+                            <Chip key={item} label={item} size="small" sx={{ bgcolor: "rgba(66,165,245,0.15)", color: "#42a5f5", fontSize: "0.7rem", height: 24 }} />
+                          ))}
+                        </Box>
+                      </Box>
+                    </Grid>
+                  ))}
               </CardContent>
             </Card>
           </Grid>

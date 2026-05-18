@@ -129,7 +129,7 @@ export default function Detector() {
 
         <Grid container spacing={3}>
           {/* Left: Input */}
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={6}>
             <Card sx={{
               background: cardBg,
               border: cardBorder,
@@ -268,7 +268,7 @@ export default function Detector() {
           </Grid>
 
           {/* Right: Results */}
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={6}>
             {!result && !loading && (
               <Card sx={{
                 background: isDark

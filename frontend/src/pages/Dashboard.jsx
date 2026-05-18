@@ -2,23 +2,29 @@
 import { useState, useEffect } from "react";
 import {
   Box, Container, Typography, Grid, Card, CardContent,
-  CircularProgress, Alert, ToggleButton, ToggleButtonGroup,
+  CircularProgress, Alert, useTheme,
 } from "@mui/material";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   PieChart, Pie, Cell, ResponsiveContainer, RadarChart, Radar,
-  PolarGrid, PolarAngleAxis, PolarRadiusAxis, LineChart, Line,
+  PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from "recharts";
 import { getStats } from "../services/api";
 
 const COLORS = ["#66bb6a", "#ef5350", "#42a5f5", "#ffa726", "#ab47bc"];
 
 // Custom tooltip for charts
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, isDark }) => {
   if (active && payload && payload.length) {
     return (
-      <Box sx={{ bgcolor: "#1e1e2e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 2, p: 1.5 }}>
-        <Typography variant="caption" color="grey.300">{label}</Typography>
+      <Box sx={{
+        bgcolor: isDark ? "#1e1e2e" : "#ffffff",
+        border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
+        borderRadius: 2,
+        p: 1.5,
+        boxShadow: isDark ? "0 4px 12px rgba(0,0,0,0.3)" : "0 4px 12px rgba(0,0,0,0.1)",
+      }}>
+        <Typography variant="caption" color={isDark ? "grey.300" : "grey.700"}>{label}</Typography>
         {payload.map((p, i) => (
           <Typography key={i} variant="body2" sx={{ color: p.color, fontWeight: 700 }}>
             {p.name}: {typeof p.value === "number" && p.value < 2 ? (p.value * 100).toFixed(1) + "%" : p.value.toLocaleString()}
@@ -31,10 +37,14 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function Dashboard() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [activeChart, setActiveChart] = useState("keywords");
+
+  const textColor = isDark ? "#aaa" : "#555";
+  const gridColor = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
 
   useEffect(() => {
     getStats()
@@ -82,12 +92,30 @@ export default function Dashboard() {
   }));
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: 4 }}>
+    <Box sx={{
+      minHeight: "100vh",
+      bgcolor: "background.default",
+      background: isDark
+        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
+        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+      py: 4,
+      transition: "background 0.3s ease",
+    }}>
       <Container maxWidth="lg">
-        <Typography variant="h4" fontWeight={800} sx={{ mb: 1 }}>
-          Analytics <span style={{ color: "#ef5350" }}>Dashboard</span>
+        <Typography variant="h4" fontWeight={800} sx={{
+          mb: 1,
+          textAlign: "center",
+          background: "linear-gradient(135deg, #ef5350 0%, #42a5f5 100%)",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}>
+          Analytics Dashboard
         </Typography>
-        <Typography variant="body1" color="grey.400" sx={{ mb: 4 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{
+          mb: 4,
+          textAlign: "center",
+        }}>
           Dataset statistics and model performance visualizations.
         </Typography>
 
@@ -100,9 +128,21 @@ export default function Dashboard() {
             { label: "Best Accuracy", value: "97.46%", color: "#ffa726" },
           ].map((s) => (
             <Grid item xs={6} md={3} key={s.label}>
-              <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", textAlign: "center", py: 2 }}>
+              <Card sx={{
+                bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
+                border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+                textAlign: "center",
+                py: 2,
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                  boxShadow: isDark
+                    ? "0 8px 16px rgba(0,0,0,0.3)"
+                    : "0 8px 16px rgba(0,0,0,0.1)",
+                },
+              }}>
                 <Typography variant="h5" fontWeight={800} sx={{ color: s.color }}>{s.value}</Typography>
-                <Typography variant="caption" color="grey.400">{s.label}</Typography>
+                <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{s.label}</Typography>
               </Card>
             </Grid>
           ))}
@@ -110,11 +150,15 @@ export default function Dashboard() {
 
         <Grid container spacing={3}>
           {/* Chart 1: Pie - Class Distribution */}
-          <Grid item xs={12} md={5}>
-            <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", height: 380 }}>
+          <Grid item xs={12} md={6}>
+            <Card sx={{
+              bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
+              border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+              height: 400,
+            }}>
               <CardContent>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Class Distribution</Typography>
-                <ResponsiveContainer width="100%" height={290}>
+                <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
                       data={classData}
@@ -130,7 +174,7 @@ export default function Dashboard() {
                         <Cell key={i} fill={entry.fill} />
                       ))}
                     </Pie>
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip isDark={isDark} />} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -139,17 +183,21 @@ export default function Dashboard() {
           </Grid>
 
           {/* Chart 2: Bar - Model Performance */}
-          <Grid item xs={12} md={7}>
-            <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", height: 380 }}>
+          <Grid item xs={12} md={6}>
+            <Card sx={{
+              bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
+              border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+              height: 400,
+            }}>
               <CardContent>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Comparison</Typography>
-                <ResponsiveContainer width="100%" height={290}>
-                  <BarChart data={modelData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="name" tick={{ fill: "#aaa", fontSize: 10 }} />
-                    <YAxis domain={[0.9, 1]} tick={{ fill: "#aaa", fontSize: 11 }} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={modelData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                    <XAxis dataKey="name" tick={{ fill: textColor, fontSize: 10 }} />
+                    <YAxis domain={[0.9, 1]} tick={{ fill: textColor, fontSize: 11 }} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
+                    <Tooltip content={<CustomTooltip isDark={isDark} />} />
+                    <Legend wrapperStyle={{ color: textColor }} />
                     <Bar dataKey="Accuracy" fill="#42a5f5" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="F1" fill="#66bb6a" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="ROC-AUC" fill="#ffa726" radius={[4, 4, 0, 0]} />
@@ -160,17 +208,21 @@ export default function Dashboard() {
           </Grid>
 
           {/* Chart 3: Bar - Spam Keyword Frequency */}
-          <Grid item xs={12} md={8}>
-            <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", height: 380 }}>
+          <Grid item xs={12}>
+            <Card sx={{
+              bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
+              border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+              height: 400,
+            }}>
               <CardContent>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Top Spam Keywords</Typography>
-                <ResponsiveContainer width="100%" height={290}>
-                  <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis type="number" tick={{ fill: "#aaa", fontSize: 11 }} />
-                    <YAxis dataKey="keyword" type="category" tick={{ fill: "#aaa", fontSize: 12 }} width={70} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
+                <ResponsiveContainer width="100%" height={310}>
+                  <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 80, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                    <XAxis type="number" tick={{ fill: textColor, fontSize: 11 }} />
+                    <YAxis dataKey="keyword" type="category" tick={{ fill: textColor, fontSize: 12 }} width={75} />
+                    <Tooltip content={<CustomTooltip isDark={isDark} />} />
+                    <Legend wrapperStyle={{ color: textColor }} />
                     <Bar dataKey="Spam" fill="#ef5350" radius={[0, 4, 4, 0]} />
                     <Bar dataKey="Ham" fill="#66bb6a" radius={[0, 4, 4, 0]} />
                   </BarChart>
@@ -180,20 +232,24 @@ export default function Dashboard() {
           </Grid>
 
           {/* Chart 4: Radar - Model Comparison */}
-          <Grid item xs={12} md={4}>
-            <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", height: 380 }}>
+          <Grid item xs={12}>
+            <Card sx={{
+              bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
+              border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+              height: 400,
+            }}>
               <CardContent>
-                <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Radar</Typography>
-                <ResponsiveContainer width="100%" height={290}>
+                <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Radar</Typography>
+                <ResponsiveContainer width="100%" height={310}>
                   <RadarChart data={radarData}>
-                    <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                    <PolarAngleAxis dataKey="model" tick={{ fill: "#aaa", fontSize: 11 }} />
-                    <PolarRadiusAxis domain={[90, 100]} tick={{ fill: "#aaa", fontSize: 9 }} />
+                    <PolarGrid stroke={gridColor} />
+                    <PolarAngleAxis dataKey="model" tick={{ fill: textColor, fontSize: 11 }} />
+                    <PolarRadiusAxis domain={[90, 100]} tick={{ fill: textColor, fontSize: 10 }} />
                     <Radar name="Accuracy" dataKey="Accuracy" stroke="#42a5f5" fill="#42a5f5" fillOpacity={0.2} />
                     <Radar name="F1" dataKey="F1" stroke="#66bb6a" fill="#66bb6a" fillOpacity={0.2} />
                     <Radar name="ROC-AUC" dataKey="ROCAUC" stroke="#ffa726" fill="#ffa726" fillOpacity={0.2} />
-                    <Legend />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Legend wrapperStyle={{ color: textColor }} />
+                    <Tooltip content={<CustomTooltip isDark={isDark} />} />
                   </RadarChart>
                 </ResponsiveContainer>
               </CardContent>

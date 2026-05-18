@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   Box, Container, Typography, TextField, Button, Card, CardContent,
   Grid, Chip, CircularProgress, Alert, Select, MenuItem, FormControl,
-  InputLabel, LinearProgress, Divider, Tooltip, IconButton,
+  InputLabel, LinearProgress, Divider, Tooltip, IconButton, useTheme,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -28,6 +28,8 @@ const SAMPLE_MESSAGES = [
 ];
 
 export default function Detector() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [text, setText] = useState("");
   const [model, setModel] = useState("random_forest");
   const [result, setResult] = useState(null);
@@ -94,20 +96,50 @@ export default function Detector() {
     return "Low Risk";
   };
 
+  const cardBg = isDark
+    ? "rgba(255,255,255,0.04)"
+    : "rgba(255,255,255,0.6)";
+  const cardBorder = isDark
+    ? "1px solid rgba(255,255,255,0.08)"
+    : "1px solid rgba(239,83,80,0.1)";
+
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: 4 }}>
+    <Box sx={{
+      minHeight: "100vh",
+      bgcolor: "background.default",
+      py: 4,
+      background: isDark
+        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
+        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+      transition: "background 0.3s ease",
+    }}>
       <Container maxWidth="lg">
-        <Typography variant="h4" fontWeight={800} sx={{ mb: 1 }}>
-          Spam <span style={{ color: "#ef5350" }}>Detector</span>
+        <Typography variant="h4" fontWeight={800} sx={{
+          mb: 1,
+          background: "linear-gradient(135deg, #ef5350 0%, #42a5f5 100%)",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}>
+          Spam Detector
         </Typography>
-        <Typography variant="body1" color="grey.400" sx={{ mb: 4 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4 }}>
           Enter any message or email to analyze it for spam content.
         </Typography>
 
         <Grid container spacing={3}>
           {/* Left: Input */}
           <Grid item xs={12} md={7}>
-            <Card sx={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+            <Card sx={{
+              background: cardBg,
+              border: cardBorder,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                boxShadow: isDark
+                  ? "0 8px 16px rgba(0,0,0,0.3)"
+                  : "0 8px 16px rgba(0,0,0,0.1)",
+              },
+            }}>
               <CardContent sx={{ p: 3 }}>
                 {/* Model selector */}
                 <FormControl fullWidth sx={{ mb: 2 }}>
@@ -129,11 +161,18 @@ export default function Detector() {
                   onChange={(e) => setText(e.target.value)}
                   error={!!error}
                   helperText={error || `${text.length} characters`}
-                  sx={{ mb: 2 }}
+                  sx={{
+                    mb: 2,
+                    "& .MuiOutlinedInput-root": {
+                      background: isDark
+                        ? "rgba(255,255,255,0.05)"
+                        : "rgba(255,255,255,0.5)",
+                    },
+                  }}
                 />
 
                 {/* Sample messages */}
-                <Typography variant="caption" color="grey.500" sx={{ mb: 1, display: "block" }}>
+                <Typography variant="caption" color={isDark ? "grey.500" : "grey.600"} sx={{ mb: 1, display: "block" }}>
                   Try a sample:
                 </Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}>
@@ -145,7 +184,7 @@ export default function Detector() {
                       onClick={() => { setText(msg); setError(""); }}
                       color={i % 2 === 0 ? "error" : "success"}
                       variant="outlined"
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: "pointer", transition: "all 0.3s ease" }}
                     />
                   ))}
                 </Box>
@@ -158,7 +197,17 @@ export default function Detector() {
                     startIcon={loading ? <CircularProgress size={18} color="inherit" /> : <SendIcon />}
                     onClick={handlePredict}
                     disabled={loading}
-                    sx={{ flex: 1, py: 1.2, fontWeight: 700 }}
+                    sx={{
+                      flex: 1,
+                      py: 1.2,
+                      fontWeight: 700,
+                      background: "linear-gradient(135deg, #ef5350 0%, #e84a3d 100%)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 8px 16px rgba(239, 83, 80, 0.3)",
+                      },
+                    }}
                   >
                     {loading ? "Analyzing..." : "Analyze Message"}
                   </Button>
@@ -173,16 +222,44 @@ export default function Detector() {
 
             {/* History */}
             {history.length > 0 && (
-              <Card sx={{ mt: 3, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <Card sx={{
+                mt: 3,
+                background: isDark
+                  ? "rgba(255,255,255,0.03)"
+                  : "rgba(255,255,255,0.5)",
+                border: isDark
+                  ? "1px solid rgba(255,255,255,0.06)"
+                  : "1px solid rgba(239,83,80,0.1)",
+                transition: "all 0.3s ease",
+              }}>
                 <CardContent>
                   <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2 }}>Recent Analyses</Typography>
                   {history.map((h, i) => (
-                    <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 2, py: 1, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                    <Box key={i} sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      py: 1,
+                      borderBottom: isDark
+                        ? "1px solid rgba(255,255,255,0.05)"
+                        : "1px solid rgba(0,0,0,0.05)",
+                      transition: "all 0.2s ease",
+                      "&:hover": {
+                        background: isDark
+                          ? "rgba(255,255,255,0.02)"
+                          : "rgba(0,0,0,0.02)",
+                      },
+                    }}>
                       <Chip label={h.label} color={h.label === "spam" ? "error" : "success"} size="small" />
-                      <Typography variant="body2" color="grey.400" sx={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{
+                        flex: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}>
                         {h.text}
                       </Typography>
-                      <Typography variant="caption" color="grey.600">{h.timestamp}</Typography>
+                      <Typography variant="caption" color={isDark ? "grey.600" : "grey.500"}>{h.timestamp}</Typography>
                     </Box>
                   ))}
                 </CardContent>
@@ -193,24 +270,54 @@ export default function Detector() {
           {/* Right: Results */}
           <Grid item xs={12} md={5}>
             {!result && !loading && (
-              <Card sx={{ background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.1)", height: 300, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Typography color="grey.600" textAlign="center">
+              <Card sx={{
+                background: isDark
+                  ? "rgba(255,255,255,0.02)"
+                  : "rgba(255,255,255,0.4)",
+                border: isDark
+                  ? "1px dashed rgba(255,255,255,0.1)"
+                  : "1px dashed rgba(239,83,80,0.2)",
+                height: 300,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+                <Typography color={isDark ? "grey.600" : "grey.500"} textAlign="center">
                   Results will appear here after analysis
                 </Typography>
               </Card>
             )}
 
             {loading && (
-              <Card sx={{ background: "rgba(255,255,255,0.04)", p: 4, textAlign: "center" }}>
+              <Card sx={{
+                background: cardBg,
+                border: cardBorder,
+                p: 4,
+                textAlign: "center",
+              }}>
                 <CircularProgress color="primary" sx={{ mb: 2 }} />
-                <Typography color="grey.400">Analyzing message...</Typography>
+                <Typography color={isDark ? "grey.400" : "grey.600"}>Analyzing message...</Typography>
               </Card>
             )}
 
             {result && (
               <Card sx={{
-                background: result.is_spam ? "rgba(239,83,80,0.08)" : "rgba(102,187,106,0.08)",
-                border: `1px solid ${result.is_spam ? "rgba(239,83,80,0.4)" : "rgba(102,187,106,0.4)"}`,
+                background: result.is_spam
+                  ? isDark
+                    ? "rgba(239,83,80,0.08)"
+                    : "rgba(239,83,80,0.1)"
+                  : isDark
+                    ? "rgba(102,187,106,0.08)"
+                    : "rgba(102,187,106,0.1)",
+                border: `1px solid ${result.is_spam
+                  ? isDark
+                    ? "rgba(239,83,80,0.4)"
+                    : "rgba(239,83,80,0.2)"
+                  : isDark
+                    ? "rgba(102,187,106,0.4)"
+                    : "rgba(102,187,106,0.2)"
+                  }`,
+                transition: "all 0.3s ease",
               }}>
                 <CardContent sx={{ p: 3 }}>
                   {/* Main verdict */}
@@ -222,17 +329,17 @@ export default function Detector() {
                     <Typography variant="h4" fontWeight={800} color={result.is_spam ? "error" : "success.main"}>
                       {result.is_spam ? "SPAM" : "LEGITIMATE"}
                     </Typography>
-                    <Typography variant="body2" color="grey.400">
+                    <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>
                       Model: {result.model_used.replace(/_/g, " ")}
                     </Typography>
                   </Box>
 
-                  <Divider sx={{ mb: 2 }} />
+                  <Divider sx={{ mb: 2, borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)" }} />
 
                   {/* Confidence */}
                   <Box sx={{ mb: 2 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                      <Typography variant="body2" color="grey.400">Confidence</Typography>
+                      <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>Confidence</Typography>
                       <Typography variant="body2" fontWeight={700}>{(result.confidence * 100).toFixed(1)}%</Typography>
                     </Box>
                     <LinearProgress
@@ -246,7 +353,7 @@ export default function Detector() {
                   {/* Risk Score */}
                   <Box sx={{ mb: 3 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                      <Typography variant="body2" color="grey.400">Risk Score</Typography>
+                      <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>Risk Score</Typography>
                       <Chip
                         label={getRiskLabel(result.risk_score)}
                         size="small"
@@ -258,7 +365,7 @@ export default function Detector() {
                       value={result.risk_score * 100}
                       sx={{ height: 8, borderRadius: 4, "& .MuiLinearProgress-bar": { bgcolor: getRiskColor(result.risk_score) } }}
                     />
-                    <Typography variant="caption" color="grey.500">{result.risk_score.toFixed(4)}</Typography>
+                    <Typography variant="caption" color={isDark ? "grey.500" : "grey.600"}>{result.risk_score.toFixed(4)}</Typography>
                   </Box>
 
                   {/* Feature breakdown */}
@@ -271,16 +378,24 @@ export default function Detector() {
                       { label: "Exclamations", value: result.features.exclaim_count },
                     ].map((f) => (
                       <Grid item xs={6} key={f.label}>
-                        <Box sx={{ bgcolor: "rgba(255,255,255,0.05)", borderRadius: 2, p: 1, textAlign: "center" }}>
+                        <Box sx={{
+                          bgcolor: isDark
+                            ? "rgba(255,255,255,0.05)"
+                            : "rgba(255,255,255,0.5)",
+                          borderRadius: 2,
+                          p: 1,
+                          textAlign: "center",
+                          transition: "all 0.3s ease",
+                        }}>
                           <Typography variant="h6" fontWeight={700}>{typeof f.value === "number" ? f.value.toFixed ? f.value.toFixed(0) : f.value : f.value}</Typography>
-                          <Typography variant="caption" color="grey.400">{f.label}</Typography>
+                          <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{f.label}</Typography>
                         </Box>
                       </Grid>
                     ))}
                   </Grid>
 
                   {/* Cluster */}
-                  <Typography variant="caption" color="grey.500">
+                  <Typography variant="caption" color={isDark ? "grey.500" : "grey.600"}>
                     Cluster: {result.cluster === 0 ? "Group A" : "Group B"} · Processed {result.clean_text.split(" ").length} tokens
                   </Typography>
 
@@ -292,6 +407,12 @@ export default function Detector() {
                       startIcon={<DownloadIcon />}
                       onClick={handleExport}
                       size="small"
+                      sx={{
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          transform: "translateY(-2px)",
+                        },
+                      }}
                     >
                       Export Result (JSON)
                     </Button>

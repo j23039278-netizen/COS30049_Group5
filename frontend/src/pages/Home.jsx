@@ -115,24 +115,26 @@ export default function Home() {
         {/* ── Stats Bar ── */}
         <Box sx={{
           display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: { xs: 1.5, sm: 2, md: 3 },
+          justifyContent: "space-between",
+          gap: { xs: 1, sm: 2, md: 2 },
           mb: 8,
           animation: "fadeIn 1.4s ease-in 0.6s both",
+          flexWrap: "wrap",
         }}>
           {stats.map((stat) => (
             <Card
               key={stat.label}
               sx={{
+                flex: "1 1 calc(50% - 8px)",
+                "@media (min-width: 600px)": {
+                  flex: "1 1 calc(25% - 8px)",
+                },
                 textAlign: "center",
                 py: { xs: 2.5, md: 3 },
                 px: { xs: 2, md: 3 },
                 background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)",
                 border: isDark ? "1px solid rgba(239,83,80,0.2)" : "1px solid rgba(239,83,80,0.15)",
-                flex: "1 1 auto",
-                minWidth: { xs: "calc(50% - 12px)", sm: "calc(50% - 12px)", md: "auto" },
-                maxWidth: { md: 200 },
+                minWidth: 0,
                 "&:hover": {
                   transform: "translateY(-6px)",
                   boxShadow: isDark ? "0 12px 24px rgba(0,0,0,0.3)" : "0 12px 24px rgba(0,0,0,0.1)",
@@ -155,13 +157,25 @@ export default function Home() {
           Why <span style={{ color: "#ef5350" }}>ThreatInk</span>?
         </Typography>
 
-        <Grid container spacing={4} sx={{ pb: 10 }}>
+        <Box sx={{
+          display: "flex",
+          gap: 4,
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          pb: 10,
+        }}>
           {features.map((f, index) => (
-            <Grid item xs={12} sm={6} md={3} key={f.title} sx={{
-              animation: `fadeIn 0.6s ease-in ${0.8 + index * 0.1}s both`,
-            }}>
+            <Box
+              key={f.title}
+              sx={{
+                flex: "1 1 calc(25% - 12px)",
+                minWidth: "auto",
+                animation: `fadeIn 0.6s ease-in ${0.8 + index * 0.1}s both`,
+              }}
+            >
               <Card sx={{
                 height: "100%",
+                minHeight: 340,
                 background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)",
                 border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
                 transition: "all 0.3s ease",
@@ -180,9 +194,9 @@ export default function Home() {
                   <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ flex: 1 }}>{f.desc}</Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
       </Container>
 

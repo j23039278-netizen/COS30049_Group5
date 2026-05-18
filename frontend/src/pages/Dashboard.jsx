@@ -146,8 +146,8 @@ export default function Dashboard() {
                   cx="50%" cy="45%"
                   outerRadius={130} innerRadius={65}
                   dataKey="value"
-                  label={({ name, percent }) => `${name.split(" ")[0]} ${(percent * 100).toFixed(1)}%`}
-                  labelLine
+                  label={false}
+                  labelLine={false}
                 >
                   {classData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
                 </Pie>

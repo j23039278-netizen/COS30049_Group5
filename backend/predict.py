@@ -94,7 +94,7 @@ def predict(text: str, model_name: str = "random_forest") -> dict:
     num_scaled   = scaler.transform(num_features)
 
     # 4. Combined feature matrix
-    X_combined = hstack([tfidf_vec, csr_matrix(num_scaled)])
+    X_combined = tfidf_vec
 
     # 5. Classification
     clf = MODEL_MAP.get(model_name, clf_rf)

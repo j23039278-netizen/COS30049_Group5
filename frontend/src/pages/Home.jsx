@@ -148,14 +148,14 @@ export default function Home() {
 
         {/* ── Features ── */}
         <Typography variant="h4" fontWeight={700} textAlign="center" sx={{
-          mb: 5,
+          mb: 6,
           color: isDark ? "white" : "text.primary",
           fontSize: { xs: "1.8rem", md: "2.2rem" },
         }}>
           Why <span style={{ color: "#ef5350" }}>ThreatInk</span>?
         </Typography>
 
-        <Grid container spacing={3} sx={{ pb: 10 }}>
+        <Grid container spacing={4} sx={{ pb: 10 }}>
           {features.map((f, index) => (
             <Grid item xs={12} sm={6} md={3} key={f.title} sx={{
               animation: `fadeIn 0.6s ease-in ${0.8 + index * 0.1}s both`,
@@ -169,14 +169,14 @@ export default function Home() {
                 display: "flex",
                 flexDirection: "column",
                 "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow: isDark ? "0 12px 24px rgba(239,83,80,0.15)" : "0 12px 24px rgba(239,83,80,0.1)",
-                  borderColor: "primary.main",
+                  transform: "translateY(-12px)",
+                  boxShadow: isDark ? "0 16px 32px rgba(239,83,80,0.2)" : "0 16px 32px rgba(239,83,80,0.15)",
+                  borderColor: "#ef5350",
                 },
               }}>
-                <CardContent sx={{ textAlign: "center", p: 3, flex: 1, display: "flex", flexDirection: "column" }}>
-                  <Box sx={{ mb: 2 }}>{f.icon}</Box>
-                  <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>{f.title}</Typography>
+                <CardContent sx={{ textAlign: "center", p: 4, flex: 1, display: "flex", flexDirection: "column" }}>
+                  <Box sx={{ mb: 3, fontSize: "2.5rem" }}>{f.icon}</Box>
+                  <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>{f.title}</Typography>
                   <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ flex: 1 }}>{f.desc}</Typography>
                 </CardContent>
               </Card>

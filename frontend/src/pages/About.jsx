@@ -88,24 +88,30 @@ export default function About() {
           </Grid>
 
           {/* Model Performance */}
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12}>
             <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Model Performance</Typography>
-                <Grid container spacing={2}>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h6" fontWeight={700} sx={{ mb: 4 }}>Model Performance</Typography>
+                <Grid container spacing={3}>
                   {modelPerf.map((m) => (
                     <Grid item xs={12} sm={6} md={3} key={m.name}>
-                      <Box sx={{ p: 2, borderRadius: 2, bgcolor: m.best ? "rgba(239,83,80,0.1)" : "rgba(255,255,255,0.04)", border: m.best ? "1px solid rgba(239,83,80,0.4)" : "1px solid rgba(255,255,255,0.1)", textAlign: "center" }}>
-                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
-                          <Typography variant="body2" fontWeight={700}>{m.name}</Typography>
-                          {m.best && <Chip label="Best" size="small" color="error" sx={{ height: 18, fontSize: "0.65rem" }} />}
+                      <Box sx={{ p: 3.5, borderRadius: 2, bgcolor: m.best ? "rgba(239,83,80,0.15)" : "rgba(255,255,255,0.05)", border: m.best ? "2px solid rgba(239,83,80,0.5)" : "1px solid rgba(255,255,255,0.15)", textAlign: "center", height: "100%" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 3 }}>
+                          <Typography variant="body1" fontWeight={700}>{m.name}</Typography>
+                          {m.best && <Chip label="Best" size="small" color="error" sx={{ height: 22, fontSize: "0.7rem" }} />}
                         </Box>
-                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>Accuracy</Typography>
-                        <Typography variant="body2" fontWeight={700} sx={{ color: "#42a5f5", mb: 1 }}>{m.accuracy}</Typography>
-                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>F1 Score</Typography>
-                        <Typography variant="body2" fontWeight={700} sx={{ color: "#66bb6a", mb: 1 }}>{m.f1}</Typography>
-                        <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 0.5 }}>ROC-AUC</Typography>
-                        <Typography variant="body2" fontWeight={700} sx={{ color: "#ffa726" }}>{m.roc}</Typography>
+                        <Box sx={{ mb: 2.5, pb: 2.5, borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                          <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 1, fontSize: "0.75rem" }}>Accuracy</Typography>
+                          <Typography variant="h6" fontWeight={800} sx={{ color: "#42a5f5", fontSize: "1.1rem" }}>{m.accuracy}</Typography>
+                        </Box>
+                        <Box sx={{ mb: 2.5 }}>
+                          <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 1, fontSize: "0.75rem" }}>F1 Score</Typography>
+                          <Typography variant="h6" fontWeight={800} sx={{ color: "#66bb6a", fontSize: "1.1rem" }}>{m.f1}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant="caption" color="grey.400" sx={{ display: "block", mb: 1, fontSize: "0.75rem" }}>ROC-AUC</Typography>
+                          <Typography variant="h6" fontWeight={800} sx={{ color: "#ffa726", fontSize: "1.1rem" }}>{m.roc}</Typography>
+                        </Box>
                       </Box>
                     </Grid>
                   ))}
@@ -115,21 +121,21 @@ export default function About() {
           </Grid>
 
           {/* Tech Stack */}
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12}>
             <Card sx={{ bgcolor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Tech Stack</Typography>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h6" fontWeight={700} sx={{ mb: 4 }}>Tech Stack</Typography>
                 <Grid container spacing={3}>
                   {techStack.map((t) => (
                     <Grid item xs={12} sm={6} md={3} key={t.category}>
-                      <Box sx={{ p: 2, borderRadius: 2, bgcolor: "rgba(66,165,245,0.08)", border: "1px solid rgba(66,165,245,0.2)", height: "100%" }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                          <Box sx={{ color: "#42a5f5", fontSize: "1.5rem" }}>{t.icon}</Box>
-                          <Typography variant="body2" fontWeight={700}>{t.category}</Typography>
+                      <Box sx={{ p: 3.5, borderRadius: 2, bgcolor: "rgba(66,165,245,0.1)", border: "1px solid rgba(66,165,245,0.3)", height: "100%" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3.5 }}>
+                          <Box sx={{ color: "#42a5f5", fontSize: "2rem" }}>{t.icon}</Box>
+                          <Typography variant="body1" fontWeight={700}>{t.category}</Typography>
                         </Box>
-                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                           {t.items.map((item) => (
-                            <Chip key={item} label={item} size="small" sx={{ bgcolor: "rgba(66,165,245,0.15)", color: "#42a5f5", fontSize: "0.7rem", height: 24 }} />
+                            <Chip key={item} label={item} size="small" sx={{ bgcolor: "rgba(66,165,245,0.2)", color: "#42a5f5", fontSize: "0.75rem", height: 30, fontWeight: 600 }} />
                           ))}
                         </Box>
                       </Box>

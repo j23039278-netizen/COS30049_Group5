@@ -162,7 +162,7 @@ export default function Dashboard() {
         <Grid container spacing={4}>
           {/* Chart 1: Pie - Class Distribution */}
           <Grid item xs={12} md={6}>
-            <Card sx{{
+            <Card sx={{
               bgcolor: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.6)",
               border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
               height: 480,
@@ -204,7 +204,7 @@ export default function Dashboard() {
               display: "flex",
               flexDirection: "column",
             }}>
-              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Comparison</Typography>
                 <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={modelData} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
@@ -231,7 +231,7 @@ export default function Dashboard() {
               display: "flex",
               flexDirection: "column",
             }}>
-              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Top Spam Keywords</Typography>
                 <ResponsiveContainer width="100%" height={360}>
                   <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 120, bottom: 5 }}>
@@ -257,7 +257,7 @@ export default function Dashboard() {
               display: "flex",
               flexDirection: "column",
             }}>
-              <CardContent sx{{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Radar</Typography>
                 <ResponsiveContainer width="100%" height={360}>
                   <RadarChart data={radarData}>

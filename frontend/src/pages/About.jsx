@@ -109,6 +109,7 @@ export default function About() {
                       </Box>
                     </Grid>
                   ))}
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
@@ -134,6 +135,7 @@ export default function About() {
                       </Box>
                     </Grid>
                   ))}
+                </Grid>
               </CardContent>
             </Card>
           </Grid>

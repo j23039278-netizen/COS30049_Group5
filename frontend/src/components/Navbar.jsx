@@ -29,7 +29,7 @@ export default function Navbar({ isDarkMode, onToggleTheme }) {
       <AppBar position="sticky" sx={{
         background: isDarkMode
           ? "rgba(18,18,26,0.95)"
-          : "rgba(255,255,255,0.95)",
+          : "rgba(223, 212, 144, 0.95)",
         backdropFilter: "blur(10px)",
         borderBottom: isDarkMode
           ? "1px solid rgba(239,83,80,0.2)"
@@ -55,7 +55,7 @@ export default function Navbar({ isDarkMode, onToggleTheme }) {
               sx={{
                 color: location.pathname === link.path ? "primary.main" : "inherit",
                 fontWeight: location.pathname === link.path ? 700 : 400,
-                borderBottom: location.pathname === link.path ? "2px solid #ef5350" : "2px solid transparent",
+                borderBottom: location.pathname === link.path ? "2px solid #e41313" : "2px solid transparent",
                 borderRadius: 0,
                 mx: 1,
                 opacity: location.pathname === link.path ? 1 : 0.7,

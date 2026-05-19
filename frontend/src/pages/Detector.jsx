@@ -279,10 +279,6 @@ export default function Detector() {
                     ))}
                   </Box>
 
-                  <Typography variant="caption" color="grey.500">
-                    Cluster: {result.cluster === 0 ? "Group A" : "Group B"} · Processed {result.clean_text.split(" ").length} tokens
-                  </Typography>
-
                   {/* Export */}
                   <Box sx={{ mt: 2 }}>
                     <Button fullWidth variant="outlined" startIcon={<DownloadIcon />} onClick={handleExport} size="small"

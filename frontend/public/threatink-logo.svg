@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Shield background -->
+  <path d="M50 8 L85 25 L85 50 C85 75 50 92 50 92 C50 92 15 75 15 50 L15 25 Z" 
+        fill="#ef5350" opacity="0.9"/>
+  
+  <!-- Shield border -->
+  <path d="M50 8 L85 25 L85 50 C85 75 50 92 50 92 C50 92 15 75 15 50 L15 25 Z" 
+        fill="none" stroke="#ef5350" stroke-width="1.5"/>
+  
+  <!-- Ink droplet inside shield -->
+  <circle cx="50" cy="45" r="12" fill="white"/>
+  <path d="M50 33 Q56 40 56 48 Q56 55 50 58 Q44 55 44 48 Q44 40 50 33" 
+        fill="white" stroke="#ef5350" stroke-width="1"/>
+  
+  <!-- Security checkmark -->
+  <g transform="translate(50, 45)">
+    <path d="M -5 0 L 0 5 L 8 -5" stroke="white" stroke-width="2.5" fill="none" 
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

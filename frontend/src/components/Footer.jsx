@@ -17,7 +17,7 @@ export default function Footer() {
       textAlign: "center",
     }}>
       <Typography variant="body2" color={isDark ? "grey.500" : "grey.600"}>
-        @ <span style={{ color: "#ef5350", fontWeight: 700 }}>ThreatInk</span> - 2026
+         <span style={{ color: "#ef5350", fontWeight: 700 }}>@ ThreatInk - 2026  |  COS30049 Group 05  |  Swinburne University of Technology</span>
       </Typography>
     </Box>
   );

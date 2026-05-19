@@ -1,8 +1,9 @@
 // App.jsx - ThreatInk Main Router
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme, CssBaseline, Box } from "@mui/material";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Detector from "./pages/Detector";
 import Dashboard from "./pages/Dashboard";
@@ -47,13 +48,18 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar isDarkMode={isDarkMode} onToggleTheme={() => setIsDarkMode(!isDarkMode)} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detector" element={<Detector />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <Navbar isDarkMode={isDarkMode} onToggleTheme={() => setIsDarkMode(!isDarkMode)} />
+        <Box sx={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/detector" element={<Detector />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Box>
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 }

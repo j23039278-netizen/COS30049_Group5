@@ -11,22 +11,22 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const features = [
   {
-    icon: <SecurityIcon sx={{ fontSize: 40, color: "#ef5350" }} />,
+    icon: <SecurityIcon sx={{ fontSize: 40, color: "#e63946" }} />,
     title: "AI-Powered Detection",
     desc: "Uses Random Forest, Logistic Regression, Naive Bayes, and Linear SVM to classify spam messages with up to 97.46% accuracy.",
   },
   {
-    icon: <SpeedIcon sx={{ fontSize: 40, color: "#42a5f5" }} />,
+    icon: <SpeedIcon sx={{ fontSize: 40, color: "#457b9d" }} />,
     title: "Real-Time Analysis",
     desc: "Get instant spam classification results with confidence scores and risk levels within milliseconds.",
   },
   {
-    icon: <AnalyticsIcon sx={{ fontSize: 40, color: "#66bb6a" }} />,
+    icon: <AnalyticsIcon sx={{ fontSize: 40, color: "#57b849" }} />,
     title: "Data Visualization",
     desc: "Explore interactive charts showing model performance, spam patterns, and keyword frequency analysis.",
   },
   {
-    icon: <ShieldIcon sx={{ fontSize: 40, color: "#ffa726" }} />,
+    icon: <ShieldIcon sx={{ fontSize: 40, color: "#f59e0b" }} />,
     title: "Risk Scoring",
     desc: "Beyond binary classification — get a continuous spam risk score from 0.0 to 1.0 for nuanced threat assessment.",
   },
@@ -48,8 +48,8 @@ export default function Home() {
     <Box sx={{
       minHeight: "100vh",
       background: isDark
-        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
-        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+        ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
+        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
       transition: "background 0.3s ease",
       pb: 8,
     }}>
@@ -60,7 +60,7 @@ export default function Home() {
           <Typography variant="h2" fontWeight={800} sx={{
             mb: 2,
             fontSize: { xs: "2rem", md: "3.4rem" },
-            background: "linear-gradient(135deg, #ef5350 0%, #42a5f5 100%)",
+            background: "linear-gradient(135deg, #e63946 0%, #457b9d 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -86,9 +86,9 @@ export default function Home() {
               endIcon={<ArrowForwardIcon />}
               sx={{
                 px: 4, py: 1.5, fontWeight: 700, fontSize: "1rem",
-                background: "linear-gradient(135deg, #ef5350 0%, #e84a3d 100%)",
-                boxShadow: "0 8px 16px rgba(239,83,80,0.3)",
-                "&:hover": { transform: "translateY(-4px)", boxShadow: "0 12px 24px rgba(239,83,80,0.4)" },
+                background: "linear-gradient(135deg, #e63946 0%, #d62828 100%)",
+                boxShadow: "0 8px 16px rgba(230, 57, 70, 0.3)",
+                "&:hover": { transform: "translateY(-4px)", boxShadow: "0 12px 24px rgba(230, 57, 70, 0.4)" },
                 transition: "all 0.3s ease",
               }}
             >
@@ -101,7 +101,7 @@ export default function Home() {
                 px: 4, py: 1.5, fontWeight: 700, fontSize: "1rem",
                 borderColor: "primary.main", color: "primary.main",
                 "&:hover": {
-                  backgroundColor: isDark ? "rgba(239,83,80,0.1)" : "rgba(239,83,80,0.08)",
+                  backgroundColor: isDark ? "rgba(230, 57, 70, 0.1)" : "rgba(230, 57, 70, 0.08)",
                   transform: "translateY(-4px)",
                 },
                 transition: "all 0.3s ease",
@@ -127,13 +127,13 @@ export default function Home() {
               sx={{
                 flex: "1 1 calc(50% - 8px)",
                 "@media (min-width: 600px)": {
-                  flex: "1 1 calc(25% - 8px)",
+                  flex: "1 1 calc(50% - 8px)",
                 },
                 textAlign: "center",
                 py: { xs: 2.5, md: 3 },
                 px: { xs: 2, md: 3 },
-                background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)",
-                border: isDark ? "1px solid rgba(239,83,80,0.2)" : "1px solid rgba(239,83,80,0.15)",
+                background: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.7)",
+                border: isDark ? "1px solid rgba(255, 107, 122, 0.15)" : "1px solid rgba(227, 57, 70, 0.1)",
                 minWidth: 0,
                 "&:hover": {
                   transform: "translateY(-6px)",
@@ -168,7 +168,13 @@ export default function Home() {
             <Box
               key={f.title}
               sx={{
-                flex: "1 1 calc(25% - 12px)",
+                flex: "1 1 calc(100% - 12px)",
+                "@media (min-width: 600px)": {
+                  flex: "1 1 calc(50% - 12px)",
+                },
+                "@media (min-width: 1200px)": {
+                  flex: "1 1 calc(25% - 12px)",
+                },
                 minWidth: "auto",
                 animation: `fadeIn 0.6s ease-in ${0.8 + index * 0.1}s both`,
               }}
@@ -176,16 +182,16 @@ export default function Home() {
               <Card sx={{
                 height: "100%",
                 minHeight: 340,
-                background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)",
-                border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)",
+                background: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.7)",
+                border: isDark ? "1px solid rgba(255, 107, 122, 0.15)" : "1px solid rgba(227, 57, 70, 0.1)",
                 transition: "all 0.3s ease",
                 cursor: "pointer",
                 display: "flex",
                 flexDirection: "column",
                 "&:hover": {
                   transform: "translateY(-12px)",
-                  boxShadow: isDark ? "0 16px 32px rgba(239,83,80,0.2)" : "0 16px 32px rgba(239,83,80,0.15)",
-                  borderColor: "#ef5350",
+                  boxShadow: isDark ? "0 16px 32px rgba(255, 107, 122, 0.2)" : "0 16px 32px rgba(230, 57, 70, 0.15)",
+                  borderColor: isDark ? "rgba(255, 107, 122, 0.5)" : "rgba(230, 57, 70, 0.3)",
                 },
               }}>
                 <CardContent sx={{ textAlign: "center", p: 4, flex: 1, display: "flex", flexDirection: "column" }}>

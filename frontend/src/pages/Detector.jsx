@@ -97,15 +97,15 @@ export default function Detector() {
     <Box sx={{
       minHeight: "100vh",
       background: isDark
-        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
-        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+        ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
+        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
       transition: "background 0.3s ease",
       py: 4,
     }}>
       <Container maxWidth="lg">
         <Typography variant="h4" fontWeight={800} sx={{
           mb: 1,
-          background: "linear-gradient(135deg, #ef5350 0%, #42a5f5 100%)",
+          background: "linear-gradient(135deg, #e63946 0%, #457b9d 100%)",
           backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
           Spam Detector
@@ -115,10 +115,10 @@ export default function Detector() {
         </Typography>
 
         {/* Two equal columns using flexbox */}
-        <Box sx={{ display: "flex", gap: 3, alignItems: "stretch" }}>
+        <Box sx={{ display: "flex", gap: 3, alignItems: "stretch", flexDirection: { xs: "column", md: "row" } }}>
 
           {/* ── Left: Input ── */}
-          <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 3 }}>
+          <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
             <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1 }}>
               <CardContent sx={{ p: 3, height: "100%", display: "flex", flexDirection: "column" }}>
                 {/* Model selector */}
@@ -174,8 +174,8 @@ export default function Detector() {
                     disabled={loading}
                     sx={{
                       py: 1.2, fontWeight: 700,
-                      background: "linear-gradient(135deg, #ef5350 0%, #e84a3d 100%)",
-                      "&:hover": { transform: "translateY(-2px)", boxShadow: "0 8px 16px rgba(239,83,80,0.3)" },
+                    background: "linear-gradient(135deg, #e63946 0%, #d62828 100%)",
+                    "&:hover": { transform: "translateY(-2px)", boxShadow: "0 8px 16px rgba(230, 57, 70, 0.3)" },
                       transition: "all 0.3s ease",
                     }}
                   >
@@ -211,7 +211,7 @@ export default function Detector() {
           </Box>
 
           {/* ── Right: Results ── */}
-          <Box sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
             {!result && !loading && (
               <Card sx={{
                 bgcolor: isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.4)",
@@ -236,11 +236,11 @@ export default function Detector() {
               <Card sx={{
                 height: "100%",
                 background: result.is_spam
-                  ? isDark ? "rgba(239,83,80,0.08)" : "rgba(239,83,80,0.06)"
-                  : isDark ? "rgba(102,187,106,0.08)" : "rgba(102,187,106,0.06)",
+                  ? isDark ? "rgba(230, 57, 70, 0.08)" : "rgba(230, 57, 70, 0.06)"
+                  : isDark ? "rgba(102, 187, 106, 0.08)" : "rgba(102, 187, 106, 0.06)",
                 border: `1px solid ${result.is_spam
-                  ? isDark ? "rgba(239,83,80,0.4)" : "rgba(239,83,80,0.2)"
-                  : isDark ? "rgba(102,187,106,0.4)" : "rgba(102,187,106,0.2)"}`,
+                  ? isDark ? "rgba(230, 57, 70, 0.4)" : "rgba(230, 57, 70, 0.2)"
+                  : isDark ? "rgba(102, 187, 106, 0.4)" : "rgba(102, 187, 106, 0.2)"}`,
               }}>
                 <CardContent sx={{ p: 3 }}>
                   {/* Verdict */}

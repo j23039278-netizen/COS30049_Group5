@@ -38,8 +38,8 @@ export default function About() {
     <Box sx={{
       minHeight: "100vh",
       background: isDark
-        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
-        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+        ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
+        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
       transition: "background 0.3s ease",
       py: 4,
     }}>
@@ -47,7 +47,7 @@ export default function About() {
 
         {/* Header */}
         <Typography variant="h4" fontWeight={800} sx={{ mb: 1 }}>
-          About <span style={{ color: "#ef5350" }}>ThreatInk</span>
+          About <span style={{ color: isDark ? "#ff6b7a" : "#e63946" }}>ThreatInk</span>
         </Typography>
         <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4, maxWidth: 700 }}>
           ThreatInk is a machine learning-powered spam detection system developed for
@@ -56,9 +56,9 @@ export default function About() {
         </Typography>
 
         {/* Row 1: Project Info + Team Members */}
-        <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
+        <Box sx={{ display: "flex", gap: 3, mb: 3, flexDirection: { xs: "column", md: "row" } }}>
           {/* Project Info */}
-          <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1 }}>
+          <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1, minWidth: 0 }}>
             <CardContent sx={{ p: 3 }}>
               <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Project Information</Typography>
               {[
@@ -77,7 +77,7 @@ export default function About() {
           </Card>
 
           {/* Team Members */}
-          <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1 }}>
+          <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1, minWidth: 0 }}>
             <CardContent sx={{ p: 3 }}>
               <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Team Members</Typography>
               {teamMembers.map((m) => (
@@ -103,10 +103,10 @@ export default function About() {
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
           <CardContent sx={{ p: 4 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Model Performance</Typography>
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {modelPerf.map((m) => (
                 <Box key={m.name} sx={{
-                  flex: 1,
+                  flex: "1 1 calc(50% - 8px)",
                   p: 3,
                   borderRadius: 2,
                   bgcolor: m.best
@@ -119,6 +119,9 @@ export default function About() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
+                  "@media (min-width: 1200px)": {
+                    flex: "1 1 calc(25% - 8px)",
+                  },
                 }}>
                   {/* Name + Best badge */}
                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1 }}>
@@ -154,23 +157,26 @@ export default function About() {
             <Box sx={{ display: "flex", gap: 2 }}>
               {techStack.map((t) => (
                 <Box key={t.category} sx={{
-                  flex: 1,
+                  flex: "1 1 calc(50% - 8px)",
                   p: 3,
                   borderRadius: 2,
-                  bgcolor: "rgba(66,165,245,0.08)",
-                  border: "1px solid rgba(66,165,245,0.25)",
+                  bgcolor: "rgba(93, 173, 226, 0.08)",
+                  border: "1px solid rgba(93, 173, 226, 0.25)",
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
+                  "@media (min-width: 1200px)": {
+                    flex: "1 1 calc(25% - 8px)",
+                  },
                 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                    <Box sx={{ color: "#42a5f5" }}>{t.icon}</Box>
+                    <Box sx={{ color: "#5dade2" }}>{t.icon}</Box>
                     <Typography variant="body1" fontWeight={700}>{t.category}</Typography>
                   </Box>
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8 }}>
                     {t.items.map((item) => (
                       <Chip key={item} label={item} size="small"
-                        sx={{ bgcolor: "rgba(66,165,245,0.15)", color: "#42a5f5", fontSize: "0.72rem", fontWeight: 600, height: 28 }}
+                        sx={{ bgcolor: "rgba(93, 173, 226, 0.15)", color: "#5dade2", fontSize: "0.72rem", fontWeight: 600, height: 28 }}
                       />
                     ))}
                   </Box>

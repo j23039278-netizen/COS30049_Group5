@@ -11,14 +11,14 @@ import {
 } from "recharts";
 import { getStats } from "../services/api";
 
-const COLORS = ["#66bb6a", "#ef5350"];
+const COLORS = ["#57b849", "#e63946"];
 
 const CustomTooltip = ({ active, payload, label, isDark }) => {
   if (active && payload && payload.length) {
     return (
       <Box sx={{
-        bgcolor: isDark ? "#1e1e2e" : "#ffffff",
-        border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
+        bgcolor: isDark ? "rgba(26,26,46,0.6)" : "rgba(255,255,255,0.8)",
+        border: isDark ? "1px solid rgba(255, 107, 122, 0.2)" : "1px solid rgba(227, 57, 70, 0.15)",
         borderRadius: 2, p: 1.5,
         boxShadow: isDark ? "0 4px 12px rgba(0,0,0,0.3)" : "0 4px 12px rgba(0,0,0,0.1)",
       }}>
@@ -43,10 +43,10 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const textColor = isDark ? "#aaa" : "#555";
+  const textColor = isDark ? "#a8aab0" : "#5a5a5a";
   const gridColor = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
-  const cardBg = isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)";
-  const cardBorder = isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)";
+  const cardBg = isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.7)";
+  const cardBorder = isDark ? "1px solid rgba(255, 107, 122, 0.15)" : "1px solid rgba(227, 57, 70, 0.1)";
 
   useEffect(() => {
     getStats()
@@ -68,8 +68,8 @@ export default function Dashboard() {
   );
 
   const classData = [
-    { name: "Ham (Legitimate)", value: stats.class_distribution.ham, fill: "#66bb6a" },
-    { name: "Spam",             value: stats.class_distribution.spam, fill: "#ef5350" },
+    { name: "Ham (Legitimate)", value: stats.class_distribution.ham, fill: "#57b849" },
+    { name: "Spam",             value: stats.class_distribution.spam, fill: "#e63946" },
   ];
 
   const modelData = Object.entries(stats.model_performance).map(([name, metrics]) => ({
@@ -96,8 +96,8 @@ export default function Dashboard() {
     <Box sx={{
       minHeight: "100vh",
       background: isDark
-        ? "linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)"
-        : "linear-gradient(180deg, #f5f7fa 0%, #e8eef7 100%)",
+        ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
+        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
       transition: "background 0.3s ease",
       py: 4,
     }}>
@@ -106,7 +106,7 @@ export default function Dashboard() {
         {/* Header */}
         <Typography variant="h4" fontWeight={800} textAlign="center" sx={{
           mb: 1,
-          background: "linear-gradient(135deg, #ef5350 0%, #42a5f5 100%)",
+          background: "linear-gradient(135deg, #e63946 0%, #457b9d 100%)",
           backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
           Analytics Dashboard
@@ -116,7 +116,7 @@ export default function Dashboard() {
         </Typography>
 
         {/* Summary Cards - flex row */}
-        <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
+        <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
           {[
             { label: "Total Records",  value: stats.class_distribution.total.toLocaleString(), color: "#42a5f5" },
             { label: "Spam Messages",  value: stats.class_distribution.spam.toLocaleString(),  color: "#ef5350" },
@@ -124,10 +124,13 @@ export default function Dashboard() {
             { label: "Best Accuracy",  value: "97.46%",                                        color: "#ffa726" },
           ].map((s) => (
             <Card key={s.label} sx={{
-              flex: 1, textAlign: "center", py: 2,
+              flex: "1 1 calc(50% - 8px)", textAlign: "center", py: 2,
               bgcolor: cardBg, border: cardBorder,
               "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 8px 20px rgba(0,0,0,0.3)" : "0 8px 20px rgba(0,0,0,0.1)" },
               transition: "all 0.3s ease",
+              "@media (min-width: 1200px)": {
+                flex: "1 1 calc(25% - 8px)",
+              },
             }}>
               <Typography variant="h5" fontWeight={800} sx={{ color: s.color }}>{s.value}</Typography>
               <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{s.label}</Typography>
@@ -169,9 +172,9 @@ export default function Dashboard() {
                 <YAxis domain={[0.9, 1]} tick={{ fill: textColor, fontSize: 12 }} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
                 <Legend verticalAlign="top" wrapperStyle={{ color: textColor }} />
-                <Bar dataKey="Accuracy" fill="#42a5f5" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="F1"       fill="#66bb6a" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="ROC-AUC" fill="#ffa726" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Accuracy" fill="#5dade2" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="F1"       fill="#57b849" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="ROC-AUC" fill="#f59e0b" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -188,8 +191,8 @@ export default function Dashboard() {
                 <YAxis dataKey="keyword" type="category" tick={{ fill: textColor, fontSize: 13 }} width={80} />
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
                 <Legend verticalAlign="top" wrapperStyle={{ color: textColor }} />
-                <Bar dataKey="Spam" fill="#ef5350" radius={[0, 4, 4, 0]} />
-                <Bar dataKey="Ham"  fill="#66bb6a" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="Spam" fill="#e63946" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="Ham"  fill="#57b849" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

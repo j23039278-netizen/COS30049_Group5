@@ -65,6 +65,28 @@ export default function Detector() {
     a.href = url; a.download = "threatink_result.json"; a.click();
   };
 
+  const handleExportCSV = () => {
+    if (!result) return;
+    const csv = [
+      ["Field", "Value"],
+      ["Input Text", text.replace(/,/g, " ")],
+      ["Label", result.label],
+      ["Is Spam", result.is_spam],
+      ["Confidence", (result.confidence * 100).toFixed(1) + "%"],
+      ["Risk Score", result.risk_score.toFixed(4)],
+      ["Model Used", result.model_used],
+      ["Word Count", result.features.word_count],
+      ["URL Count", result.features.url_count],
+      ["Spam Keywords", result.features.spam_keyword_count],
+      ["Exclamations", result.features.exclaim_count],
+      ["Timestamp", new Date().toISOString()],
+    ].map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "threatink_result.csv"; a.click();
+  };
+
   const getRiskColor = (score) => score >= 0.7 ? "#ef5350" : score >= 0.4 ? "#ffa726" : "#66bb6a";
   const getRiskLabel = (score) => score >= 0.7 ? "High Risk" : score >= 0.4 ? "Medium Risk" : "Low Risk";
 
@@ -280,10 +302,14 @@ export default function Detector() {
                   </Box>
 
                   {/* Export */}
-                  <Box sx={{ mt: 2 }}>
+                  <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
                     <Button fullWidth variant="outlined" startIcon={<DownloadIcon />} onClick={handleExport} size="small"
                       sx={{ "&:hover": { transform: "translateY(-2px)" }, transition: "all 0.3s ease" }}>
-                      Export Result (JSON)
+                      Export JSON
+                    </Button>
+                    <Button fullWidth variant="outlined" startIcon={<DownloadIcon />} onClick={handleExportCSV} size="small" color="secondary"
+                      sx={{ "&:hover": { transform: "translateY(-2px)" }, transition: "all 0.3s ease" }}>
+                      Export CSV
                     </Button>
                   </Box>
                 </CardContent>

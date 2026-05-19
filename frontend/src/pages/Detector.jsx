@@ -24,6 +24,8 @@ const SAMPLE_MESSAGES = [
   "Hi, just wanted to confirm our meeting tomorrow at 2pm. Let me know if you need to reschedule.",
   "URGENT: Your account will be suspended. Verify your credit card details immediately to avoid charges.",
   "Hey, are you coming to the study group tonight? We're meeting at the library at 7.",
+  "WINNER! Claim your free iPhone now at http://free-prize-claim.com/win before it expires!",
+  "Here is the Zoom link for tomorrow's meeting: https://zoom.us/j/123456789. See you at 3pm!",
 ];
 
 export default function Detector() {

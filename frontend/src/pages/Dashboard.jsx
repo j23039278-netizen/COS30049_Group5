@@ -111,8 +111,11 @@ export default function Dashboard() {
         }}>
           Analytics Dashboard
         </Typography>
-        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} textAlign="center" sx={{ mb: 4 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} textAlign="center" sx={{ mb: 1 }}>
           Dataset statistics and model performance visualizations.
+        </Typography>
+        <Typography variant="body2" color={isDark ? "grey.500" : "grey.500"} textAlign="center" sx={{ mb: 4 }}>
+          Trained on 94,298 combined email and SMS records from Kaggle and UCI datasets. 45,917 spam and 48,381 ham messages were used for model training, achieving a best accuracy of 97.46% with Random Forest.
         </Typography>
 
         {/* Summary Cards - flex row */}
@@ -142,6 +145,9 @@ export default function Dashboard() {
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Class Distribution</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+              Shows the proportion of Spam vs Ham (legitimate) messages in the training dataset of 94,298 records. The dataset is nearly balanced at 48.7% spam and 51.3% ham, ensuring unbiased model training.
+            </Typography>
             <ResponsiveContainer width="100%" height={380}>
               <PieChart>
                 <Pie
@@ -165,6 +171,9 @@ export default function Dashboard() {
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Comparison</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+              Compares Accuracy, F1 Score, and ROC-AUC across all four trained models. Random Forest achieved the best performance with 97.46% accuracy. Higher bars indicate better model performance.
+            </Typography>
             <ResponsiveContainer width="100%" height={380}>
               <BarChart data={modelData} margin={{ top: 10, right: 20, left: 0, bottom: 40 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
@@ -184,6 +193,9 @@ export default function Dashboard() {
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Top Spam Keywords</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+              Displays the frequency of spam-related keywords found in spam vs ham messages from the training data. Keywords like "win", "offer", and "free" appear significantly more in spam messages, making them strong spam indicators.
+            </Typography>
             <ResponsiveContainer width="100%" height={380}>
               <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
@@ -202,6 +214,9 @@ export default function Dashboard() {
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 4 }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Radar</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+              Visualizes multi-metric performance of all four models on a single radar chart. Larger area coverage indicates stronger overall performance. All models score above 93% across all metrics.
+            </Typography>
             <ResponsiveContainer width="100%" height={380}>
               <RadarChart data={radarData} margin={{ top: 20, right: 40, left: 40, bottom: 20 }}>
                 <PolarGrid stroke={gridColor} />

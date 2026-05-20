@@ -10,8 +10,8 @@ export default function Footer() {
         ? "linear-gradient(to bottom, rgba(26,26,46,0.98), rgba(15,15,30,0.98))"
         : "linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(241,244,248,0.98))",
       borderTop: isDark
-        ? "1px solid rgba(255, 107, 122, 0.15)"
-        : "1px solid rgba(227, 57, 70, 0.12)",
+        ? "5px solid rgba(255, 107, 122, 0.15)"
+        : "5px solid rgba(227, 57, 70, 0.12)",
       backdropFilter: "blur(10px)",
       py: 3,
       mt: 4,

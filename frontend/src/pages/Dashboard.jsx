@@ -106,20 +106,21 @@ export default function Dashboard() {
         {/* Header */}
         <Typography variant="h4" fontWeight={800} textAlign="center" sx={{
           mb: 1,
+          fontSize: { xs: "1.75rem", md: "2.125rem" },
           background: "linear-gradient(135deg, #e63946 0%, #457b9d 100%)",
           backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
           Analytics Dashboard
         </Typography>
-        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} textAlign="center" sx={{ mb: 1 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} textAlign="center" sx={{ mb: 1, fontSize: { xs: "0.9rem", md: "1rem" } }}>
           Dataset statistics and model performance visualizations.
         </Typography>
-        <Typography variant="body2" color={isDark ? "grey.500" : "grey.500"} textAlign="center" sx={{ mb: 4 }}>
+        <Typography variant="body2" color={isDark ? "grey.500" : "grey.500"} textAlign="center" sx={{ mb: 4, fontSize: { xs: "0.8rem", md: "0.875rem" } }}>
           Trained on 94,298 combined email and SMS records from Kaggle and UCI datasets. 45,917 spam and 48,381 ham messages were used for model training, achieving a best accuracy of 97.46% with Random Forest.
         </Typography>
 
         {/* Summary Cards - flex row */}
-        <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: { xs: 1, sm: 2 }, mb: 4, flexWrap: "wrap" }}>
           {[
             { label: "Total Records",  value: stats.class_distribution.total.toLocaleString(), color: "#42a5f5" },
             { label: "Spam Messages",  value: stats.class_distribution.spam.toLocaleString(),  color: "#ef5350" },
@@ -127,7 +128,7 @@ export default function Dashboard() {
             { label: "Best Accuracy",  value: "97.46%",                                        color: "#ffa726" },
           ].map((s) => (
             <Card key={s.label} sx={{
-              flex: "1 1 calc(50% - 8px)", textAlign: "center", py: 2,
+              flex: "1 1 calc(50% - 8px)", textAlign: "center", py: { xs: 1.5, md: 2 }, px: { xs: 1, md: 2 },
               bgcolor: cardBg, border: cardBorder,
               "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 8px 20px rgba(0,0,0,0.3)" : "0 8px 20px rgba(0,0,0,0.1)" },
               transition: "all 0.3s ease",
@@ -135,25 +136,26 @@ export default function Dashboard() {
                 flex: "1 1 calc(25% - 8px)",
               },
             }}>
-              <Typography variant="h5" fontWeight={800} sx={{ color: s.color }}>{s.value}</Typography>
-              <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{s.label}</Typography>
+              <Typography variant="h5" fontWeight={800} sx={{ color: s.color, fontSize: { xs: "1.25rem", md: "1.5rem" } }}>{s.value}</Typography>
+              <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"} sx={{ fontSize: { xs: "0.7rem", md: "0.75rem" } }}>{s.label}</Typography>
             </Card>
           ))}
         </Box>
 
         {/* Chart 1: Class Distribution (Pie) */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Class Distribution</Typography>
-            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.25rem" } }}>Class Distribution</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>
               Shows the proportion of Spam vs Ham (legitimate) messages in the training dataset of 94,298 records. The dataset is nearly balanced at 48.7% spam and 51.3% ham, ensuring unbiased model training.
             </Typography>
-            <ResponsiveContainer width="100%" height={380}>
+            <ResponsiveContainer width="100%" height={window.innerWidth < 600 ? 280 : 380}>
               <PieChart>
                 <Pie
                   data={classData}
                   cx="50%" cy="45%"
-                  outerRadius={130} innerRadius={65}
+                  outerRadius={window.innerWidth < 600 ? 90 : 130} 
+                  innerRadius={window.innerWidth < 600 ? 45 : 65}
                   dataKey="value"
                   label={false}
                   labelLine={false}
@@ -161,7 +163,7 @@ export default function Dashboard() {
                   {classData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
                 </Pie>
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
-                <Legend verticalAlign="bottom" height={36} />
+                <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: window.innerWidth < 600 ? "12px" : "14px" }} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
@@ -169,18 +171,18 @@ export default function Dashboard() {
 
         {/* Chart 2: Model Performance (Bar) */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Comparison</Typography>
-            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.25rem" } }}>Model Performance Comparison</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>
               Compares Accuracy, F1 Score, and ROC-AUC across all four trained models. Random Forest achieved the best performance with 97.46% accuracy. Higher bars indicate better model performance.
             </Typography>
-            <ResponsiveContainer width="100%" height={380}>
-              <BarChart data={modelData} margin={{ top: 10, right: 20, left: 0, bottom: 40 }}>
+            <ResponsiveContainer width="100%" height={window.innerWidth < 600 ? 280 : 380}>
+              <BarChart data={modelData} margin={{ top: 10, right: 20, left: 0, bottom: window.innerWidth < 600 ? 50 : 40 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                <XAxis dataKey="name" tick={{ fill: textColor, fontSize: 12 }} angle={-15} textAnchor="end" interval={0} />
+                <XAxis dataKey="name" tick={{ fill: textColor, fontSize: window.innerWidth < 600 ? 10 : 12 }} angle={-15} textAnchor="end" interval={0} />
                 <YAxis domain={[0.9, 1]} tick={{ fill: textColor, fontSize: 12 }} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
-                <Legend verticalAlign="top" wrapperStyle={{ color: textColor }} />
+                <Legend verticalAlign="top" wrapperStyle={{ color: textColor, fontSize: window.innerWidth < 600 ? "12px" : "14px" }} />
                 <Bar dataKey="Accuracy" fill="#5dade2" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="F1"       fill="#57b849" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="ROC-AUC" fill="#f59e0b" radius={[4, 4, 0, 0]} />
@@ -191,13 +193,13 @@ export default function Dashboard() {
 
         {/* Chart 3: Top Spam Keywords (Horizontal Bar) */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Top Spam Keywords</Typography>
-            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.25rem" } }}>Top Spam Keywords</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>
               Displays the frequency of spam-related keywords found in spam vs ham messages from the training data. Keywords like "win", "offer", and "free" appear significantly more in spam messages, making them strong spam indicators.
             </Typography>
-            <ResponsiveContainer width="100%" height={380}>
-              <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+            <ResponsiveContainer width="100%" height={window.innerWidth < 600 ? 280 : 380}>
+              <BarChart data={keywordData} layout="vertical" margin={{ top: 5, right: 30, left: window.innerWidth < 600 ? 5 : 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
                 <XAxis type="number" tick={{ fill: textColor, fontSize: 12 }} />
                 <YAxis dataKey="keyword" type="category" tick={{ fill: textColor, fontSize: 13 }} width={80} />
@@ -212,20 +214,20 @@ export default function Dashboard() {
 
         {/* Chart 4: Model Radar */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 4 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Model Performance Radar</Typography>
-            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
+          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.25rem" } }}>Model Performance Radar</Typography>
+            <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>
               Visualizes multi-metric performance of all four models on a single radar chart. Larger area coverage indicates stronger overall performance. All models score above 93% across all metrics.
             </Typography>
-            <ResponsiveContainer width="100%" height={380}>
-              <RadarChart data={radarData} margin={{ top: 20, right: 40, left: 40, bottom: 20 }}>
+            <ResponsiveContainer width="100%" height={window.innerWidth < 600 ? 280 : 380}>
+              <RadarChart data={radarData} margin={{ top: 20, right: window.innerWidth < 600 ? 20 : 40, left: window.innerWidth < 600 ? 20 : 40, bottom: 20 }}>
                 <PolarGrid stroke={gridColor} />
-                <PolarAngleAxis dataKey="model" tick={{ fill: textColor, fontSize: 12 }} />
+                <PolarAngleAxis dataKey="model" tick={{ fill: textColor, fontSize: window.innerWidth < 600 ? 10 : 12 }} />
                 <PolarRadiusAxis domain={[90, 100]} tick={{ fill: textColor, fontSize: 10 }} />
                 <Radar name="Accuracy" dataKey="Accuracy" stroke="#42a5f5" fill="#42a5f5" fillOpacity={0.25} />
                 <Radar name="F1 Score" dataKey="F1"       stroke="#66bb6a" fill="#66bb6a" fillOpacity={0.25} />
                 <Radar name="ROC-AUC" dataKey="ROCAUC"    stroke="#ffa726" fill="#ffa726" fillOpacity={0.25} />
-                <Legend verticalAlign="bottom" wrapperStyle={{ color: textColor }} />
+                <Legend verticalAlign="bottom" wrapperStyle={{ color: textColor, fontSize: window.innerWidth < 600 ? "12px" : "14px" }} />
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
               </RadarChart>
             </ResponsiveContainer>

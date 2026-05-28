@@ -85,11 +85,12 @@ export default function Home() {
               onClick={() => navigate("/detector")}
               endIcon={<ArrowForwardIcon />}
               sx={{
-                px: 4, py: 1.5, fontWeight: 700, fontSize: "1rem",
+                px: { xs: 3, md: 4 }, py: { xs: 1.2, md: 1.5 }, fontWeight: 700, fontSize: { xs: "0.9rem", md: "1rem" },
                 background: "linear-gradient(135deg, #e63946 0%, #d62828 100%)",
                 boxShadow: "0 8px 16px rgba(230, 57, 70, 0.3)",
                 "&:hover": { transform: "translateY(-4px)", boxShadow: "0 12px 24px rgba(230, 57, 70, 0.4)" },
                 transition: "all 0.3s ease",
+                width: { xs: "100%", sm: "auto" },
               }}
             >
               Try Detector
@@ -98,13 +99,14 @@ export default function Home() {
               variant="outlined" size="large"
               onClick={() => navigate("/dashboard")}
               sx={{
-                px: 4, py: 1.5, fontWeight: 700, fontSize: "1rem",
+                px: { xs: 3, md: 4 }, py: { xs: 1.2, md: 1.5 }, fontWeight: 700, fontSize: { xs: "0.9rem", md: "1rem" },
                 borderColor: "primary.main", color: "primary.main",
                 "&:hover": {
                   backgroundColor: isDark ? "rgba(230, 57, 70, 0.1)" : "rgba(230, 57, 70, 0.08)",
                   transform: "translateY(-4px)",
                 },
                 transition: "all 0.3s ease",
+                width: { xs: "100%", sm: "auto" },
               }}
             >
               View Dashboard
@@ -130,8 +132,8 @@ export default function Home() {
                   flex: "1 1 calc(50% - 8px)",
                 },
                 textAlign: "center",
-                py: { xs: 2.5, md: 3 },
-                px: { xs: 2, md: 3 },
+                py: { xs: 2, sm: 2.5, md: 3 },
+                px: { xs: 1, sm: 2, md: 3 },
                 background: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.7)",
                 border: isDark ? "1px solid rgba(255, 107, 122, 0.15)" : "1px solid rgba(227, 57, 70, 0.1)",
                 minWidth: 0,
@@ -142,8 +144,8 @@ export default function Home() {
                 transition: "all 0.3s ease",
               }}
             >
-              <Typography variant="h4" fontWeight={800} sx={{ color: "#ef5350", fontSize: { xs: "1.75rem", md: "2rem" } }}>{stat.value}</Typography>
-              <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>{stat.label}</Typography>
+              <Typography variant="h4" fontWeight={800} sx={{ color: "#ef5350", fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" } }}>{stat.value}</Typography>
+              <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ fontSize: { xs: "0.75rem", sm: "0.8rem", md: "0.875rem" } }}>{stat.label}</Typography>
             </Card>
           ))}
         </Box>
@@ -152,14 +154,14 @@ export default function Home() {
         <Typography variant="h4" fontWeight={700} textAlign="center" sx={{
           mb: 6,
           color: isDark ? "white" : "text.primary",
-          fontSize: { xs: "1.8rem", md: "2.2rem" },
+          fontSize: { xs: "1.5rem", md: "2.2rem" },
         }}>
           Why <span style={{ color: "#ef5350" }}>ThreatInk</span>?
         </Typography>
 
         <Box sx={{
           display: "flex",
-          gap: 4,
+          gap: { xs: 2, md: 4 },
           flexWrap: "wrap",
           justifyContent: "space-between",
           pb: 10,
@@ -181,7 +183,7 @@ export default function Home() {
             >
               <Card sx={{
                 height: "100%",
-                minHeight: 340,
+                minHeight: { xs: 300, md: 340 },
                 background: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.7)",
                 border: isDark ? "1px solid rgba(255, 107, 122, 0.15)" : "1px solid rgba(227, 57, 70, 0.1)",
                 transition: "all 0.3s ease",
@@ -194,10 +196,10 @@ export default function Home() {
                   borderColor: isDark ? "rgba(255, 107, 122, 0.5)" : "rgba(230, 57, 70, 0.3)",
                 },
               }}>
-                <CardContent sx={{ textAlign: "center", p: 4, flex: 1, display: "flex", flexDirection: "column" }}>
-                  <Box sx={{ mb: 3, fontSize: "2.5rem" }}>{f.icon}</Box>
-                  <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>{f.title}</Typography>
-                  <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ flex: 1 }}>{f.desc}</Typography>
+                <CardContent sx={{ textAlign: "center", p: { xs: 3, md: 4 }, flex: 1, display: "flex", flexDirection: "column" }}>
+                  <Box sx={{ mb: 3, fontSize: { xs: "2rem", md: "2.5rem" } }}>{f.icon}</Box>
+                  <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.1rem" } }}>{f.title}</Typography>
+                  <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ flex: 1, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>{f.desc}</Typography>
                 </CardContent>
               </Card>
             </Box>

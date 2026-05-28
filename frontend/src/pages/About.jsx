@@ -46,10 +46,10 @@ export default function About() {
       <Container maxWidth="lg">
 
         {/* Header */}
-        <Typography variant="h4" fontWeight={800} sx={{ mb: 1 }}>
+        <Typography variant="h4" fontWeight={800} sx={{ mb: 1, fontSize: { xs: "1.75rem", md: "2.125rem" } }}>
           About <span style={{ color: isDark ? "#ff6b7a" : "#e63946" }}>ThreatInk</span>
         </Typography>
-        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4, maxWidth: 700 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4, maxWidth: 700, fontSize: { xs: "0.9rem", md: "1rem" } }}>
           ThreatInk is a machine learning-powered spam detection system developed for
           COS30049 Computing Technology Innovation Project. It classifies messages as
           spam or legitimate using multiple ML models and provides risk scoring.
@@ -59,8 +59,8 @@ export default function About() {
         <Box sx={{ display: "flex", gap: 3, mb: 3, flexDirection: { xs: "column", md: "row" } }}>
           {/* Project Info */}
           <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1, minWidth: 0 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Project Information</Typography>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.1rem" } }}>Project Information</Typography>
               {[
                 { label: "Course",     value: "COS30049 Computing Technology Innovation Project" },
                 { label: "Section",    value: "C1 — Group 05" },
@@ -68,9 +68,9 @@ export default function About() {
                 { label: "Dataset",    value: "94,298 records (emails + SMS)" },
                 { label: "Best Model", value: "Random Forest (97.46% accuracy)" },
               ].map((item) => (
-                <Box key={item.label} sx={{ display: "flex", gap: 2, mb: 1.5 }}>
-                  <Typography variant="body2" color="grey.500" sx={{ minWidth: 110 }}>{item.label}</Typography>
-                  <Typography variant="body2" color={isDark ? "grey.200" : "text.primary"}>{item.value}</Typography>
+                <Box key={item.label} sx={{ display: "flex", gap: 2, mb: 1.5, flexWrap: "wrap" }}>
+                  <Typography variant="body2" color="grey.500" sx={{ minWidth: { xs: "auto", md: 110 }, fontSize: { xs: "0.85rem", md: "0.875rem" } }}>{item.label}</Typography>
+                  <Typography variant="body2" color={isDark ? "grey.200" : "text.primary"} sx={{ fontSize: { xs: "0.85rem", md: "0.875rem" } }}>{item.value}</Typography>
                 </Box>
               ))}
             </CardContent>
@@ -78,18 +78,18 @@ export default function About() {
 
           {/* Team Members */}
           <Card sx={{ bgcolor: cardBg, border: cardBorder, flex: 1, minWidth: 0 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Team Members</Typography>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Typography variant="h6" fontWeight={700} sx={{ mb: 2, fontSize: { xs: "1rem", md: "1.1rem" } }}>Team Members</Typography>
               {teamMembers.map((m) => (
                 <Box key={m.id} sx={{ mb: 2 }}>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 0.5 }}>
-                    <Typography variant="body1" fontWeight={600}>{m.name}</Typography>
-                    <Chip label={m.id} size="small" variant="outlined" sx={{ fontSize: "0.7rem" }} />
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 0.5, gap: 1, flexWrap: "wrap" }}>
+                    <Typography variant="body1" fontWeight={600} sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>{m.name}</Typography>
+                    <Chip label={m.id} size="small" variant="outlined" sx={{ fontSize: "0.65rem" }} />
                   </Box>
-                  <Typography variant="caption" color="primary.main" sx={{ mb: 0.5, display: "block" }}>{m.role}</Typography>
+                  <Typography variant="caption" color="primary.main" sx={{ mb: 0.5, display: "block", fontSize: { xs: "0.75rem", md: "0.8rem" } }}>{m.role}</Typography>
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {m.tasks.map((t) => (
-                      <Chip key={t} label={t} size="small" sx={{ bgcolor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)", fontSize: "0.7rem" }} />
+                      <Chip key={t} label={t} size="small" sx={{ bgcolor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)", fontSize: "0.65rem" }} />
                     ))}
                   </Box>
                   <Divider sx={{ mt: 1.5 }} />
@@ -101,13 +101,13 @@ export default function About() {
 
         {/* Row 2: Model Performance - 4 equal flex cards */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
-          <CardContent sx={{ p: 4 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Model Performance</Typography>
+          <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 3, fontSize: { xs: "1rem", md: "1.1rem" } }}>Model Performance</Typography>
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {modelPerf.map((m) => (
                 <Box key={m.name} sx={{
                   flex: "1 1 calc(50% - 8px)",
-                  p: 3,
+                  p: { xs: 2, md: 3 },
                   borderRadius: 2,
                   bgcolor: m.best
                     ? "rgba(239,83,80,0.12)"
@@ -124,25 +124,25 @@ export default function About() {
                   },
                 }}>
                   {/* Name + Best badge */}
-                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1 }}>
-                    <Typography variant="body1" fontWeight={700}>{m.name}</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, flexWrap: "wrap" }}>
+                    <Typography variant="body1" fontWeight={700} sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>{m.name}</Typography>
                     {m.best && <Chip label="Best" size="small" color="error" sx={{ height: 20, fontSize: "0.65rem" }} />}
                   </Box>
                   <Divider />
                   {/* Accuracy */}
                   <Box>
-                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5 }}>Accuracy</Typography>
-                    <Typography variant="h6" fontWeight={800} sx={{ color: "#42a5f5" }}>{m.accuracy}</Typography>
+                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5, fontSize: "0.7rem" }}>Accuracy</Typography>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: "#42a5f5", fontSize: { xs: "1.25rem", md: "1.5rem" } }}>{m.accuracy}</Typography>
                   </Box>
                   {/* F1 */}
                   <Box>
-                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5 }}>F1 Score</Typography>
-                    <Typography variant="h6" fontWeight={800} sx={{ color: "#66bb6a" }}>{m.f1}</Typography>
+                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5, fontSize: "0.7rem" }}>F1 Score</Typography>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: "#66bb6a", fontSize: { xs: "1.25rem", md: "1.5rem" } }}>{m.f1}</Typography>
                   </Box>
                   {/* ROC-AUC */}
                   <Box>
-                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5 }}>ROC-AUC</Typography>
-                    <Typography variant="h6" fontWeight={800} sx={{ color: "#ffa726" }}>{m.roc}</Typography>
+                    <Typography variant="caption" color="grey.500" display="block" sx={{ mb: 0.5, fontSize: "0.7rem" }}>ROC-AUC</Typography>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: "#ffa726", fontSize: { xs: "1.25rem", md: "1.5rem" } }}>{m.roc}</Typography>
                   </Box>
                 </Box>
               ))}
@@ -152,13 +152,13 @@ export default function About() {
 
         {/* Row 3: Tech Stack - 4 equal flex cards */}
         <Card sx={{ bgcolor: cardBg, border: cardBorder }}>
-          <CardContent sx={{ p: 4 }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 3 }}>Tech Stack</Typography>
-            <Box sx={{ display: "flex", gap: 2 }}>
+          <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 3, fontSize: { xs: "1rem", md: "1.1rem" } }}>Tech Stack</Typography>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {techStack.map((t) => (
                 <Box key={t.category} sx={{
                   flex: "1 1 calc(50% - 8px)",
-                  p: 3,
+                  p: { xs: 2, md: 3 },
                   borderRadius: 2,
                   bgcolor: "rgba(93, 173, 226, 0.08)",
                   border: "1px solid rgba(93, 173, 226, 0.25)",
@@ -170,13 +170,13 @@ export default function About() {
                   },
                 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                    <Box sx={{ color: "#5dade2" }}>{t.icon}</Box>
-                    <Typography variant="body1" fontWeight={700}>{t.category}</Typography>
+                    <Box sx={{ color: "#5dade2", fontSize: { xs: "1.2rem", md: "1.5rem" } }}>{t.icon}</Box>
+                    <Typography variant="body1" fontWeight={700} sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>{t.category}</Typography>
                   </Box>
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8 }}>
                     {t.items.map((item) => (
                       <Chip key={item} label={item} size="small"
-                        sx={{ bgcolor: "rgba(93, 173, 226, 0.15)", color: "#5dade2", fontSize: "0.72rem", fontWeight: 600, height: 28 }}
+                        sx={{ bgcolor: "rgba(93, 173, 226, 0.15)", color: "#5dade2", fontSize: "0.65rem", fontWeight: 600, height: 24 }}
                       />
                     ))}
                   </Box>

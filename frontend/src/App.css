@@ -62,12 +62,48 @@
 }
 
 /* Responsive container */
+@media (max-width: 1200px) {
+  .page-container {
+    padding: 1.5rem;
+  }
+
+  .card {
+    padding: 1.25em;
+  }
+}
+
 @media (max-width: 768px) {
   .page-container {
     padding: 1rem;
   }
 
   .card {
-    padding: 1.5em;
+    padding: 1.25em;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .btn-primary {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .gradient-text {
+    word-break: break-word;
   }
 }

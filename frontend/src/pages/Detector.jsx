@@ -144,6 +144,9 @@ export default function Detector() {
                     "& .MuiOutlinedInput-root": {
                       background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.5)",
                     },
+                    "& .MuiOutlinedInput-input": {
+                      fontSize: { xs: "0.9rem", md: "1rem" },
+                    },
                   }}
                 />
 

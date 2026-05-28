@@ -27,6 +27,15 @@ const lightTheme = createTheme({
     body1: { lineHeight: 1.6 },
   },
   shape: { borderRadius: 16 },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 const darkTheme = createTheme({
@@ -47,6 +56,15 @@ const darkTheme = createTheme({
     body1: { lineHeight: 1.6 },
   },
   shape: { borderRadius: 16 },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 function App() {

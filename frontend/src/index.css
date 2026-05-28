@@ -94,7 +94,7 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(239, 83, 80, 0.7);
 }
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

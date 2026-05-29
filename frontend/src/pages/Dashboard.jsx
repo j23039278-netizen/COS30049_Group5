@@ -9,7 +9,7 @@ import { getStats } from "../services/api";
 
 // ─── Shared Tooltip Helper ────────────────────────────────────────────────────
 function initializeGlobalTooltip() {
-  // 删除任何现存的tooltip
+
   d3.select("#d3-tooltip").remove();
   return d3
     .select("body")

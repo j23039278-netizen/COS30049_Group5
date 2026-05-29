@@ -376,8 +376,9 @@ const D3RadarChart = ({ data, isDark }) => {
         .attr("stroke", colors[mi])
         .attr("stroke-width", 2);
 
-      // Dots with tooltip
-      points.forEach(([x, y], i) => {
+      // Dots with tooltip - Fixed: use separate loop with proper scope
+      data.forEach((dataItem, dataIndex) => {
+        const [x, y] = points[dataIndex];
         g.append("circle")
           .attr("cx", x).attr("cy", y).attr("r", 5)
           .attr("fill", colors[mi])
@@ -386,9 +387,10 @@ const D3RadarChart = ({ data, isDark }) => {
           .style("cursor", "pointer")
           .on("mouseover", function (event) {
             d3.select(this).transition().duration(100).attr("r", 8);
+            const metricValue = dataItem[metric];
             showTooltip(tooltip, event,
-              `<b>${data[i].model}</b><br/>
-               <span style="color:${colors[mi]}">${labels[mi]}</span>: <b>${data[i][metric].toFixed(1)}%</b>`
+              `<b>${dataItem.model}</b><br/>
+               <span style="color:${colors[mi]}">${labels[mi]}</span>: <b>${metricValue.toFixed(1)}%</b>`
             );
           })
           .on("mousemove", (event) => moveTooltip(tooltip, event))
@@ -517,8 +519,11 @@ export default function Dashboard() {
           ))}
         </Box>
 
-        {/* Chart 1: Pie */}
-        <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
+        {/* Chart 1: Pie - Centered */}
+        <Card sx={{
+          bgcolor: cardBg, border: cardBorder, mb: 3,
+          maxWidth: 900, mx: "auto",
+        }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>Class Distribution</Typography>
             <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
@@ -531,7 +536,10 @@ export default function Dashboard() {
         </Card>
 
         {/* Chart 2: Bar */}
-        <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
+        <Card sx={{
+          bgcolor: cardBg, border: cardBorder, mb: 3,
+          maxWidth: 900, mx: "auto",
+        }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>Model Performance Comparison</Typography>
             <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
@@ -544,7 +552,10 @@ export default function Dashboard() {
         </Card>
 
         {/* Chart 3: Keyword */}
-        <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 3 }}>
+        <Card sx={{
+          bgcolor: cardBg, border: cardBorder, mb: 3,
+          maxWidth: 900, mx: "auto",
+        }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>Top Spam Keywords</Typography>
             <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>
@@ -557,7 +568,10 @@ export default function Dashboard() {
         </Card>
 
         {/* Chart 4: Radar */}
-        <Card sx={{ bgcolor: cardBg, border: cardBorder, mb: 4 }}>
+        <Card sx={{
+          bgcolor: cardBg, border: cardBorder, mb: 4,
+          maxWidth: 900, mx: "auto",
+        }}>
           <CardContent sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>Model Performance Radar</Typography>
             <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 2 }}>

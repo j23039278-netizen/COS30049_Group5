@@ -45,6 +45,8 @@ COS30049_Group5/
 │       ├── scaler.pkl
 │       └── svd_lsa.pkl
 ├── frontend/
+│   ├── public/
+│   │   └── threatink-logo.svg
 │   ├── src/
 │   │   ├── pages/
 │   │   │   ├── Home.jsx
@@ -57,10 +59,17 @@ COS30049_Group5/
 │   │   ├── services/
 │   │   │   └── api.js        # Axios API service
 │   │   ├── App.jsx           # Router + Theme provider
+│   │   ├── index.css         # Global styles + custom scrollbar
 │   │   └── main.jsx
+│   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
-└── README.md
+├── data/                     # Raw training datasets (CSV)
+├── notebooks/
+│   ├── figures/              # Assignment 2 visualisation outputs
+│   ├── data/
+│   └── ThreatInk_SpamDetection.ipynb
+└── ReadMe.md
 ```
 
 ---

@@ -54,6 +54,12 @@ COS30049_Group5/
 │   │   │   ├── Dashboard.jsx
 │   │   │   └── About.jsx
 │   │   ├── components/
+│   │   │   ├── charts/
+│   │   │   │   ├── chartUtils.js     # Shared D3 tooltip helpers
+│   │   │   │   ├── D3PieChart.jsx
+│   │   │   │   ├── D3BarChart.jsx
+│   │   │   │   ├── D3KeywordChart.jsx
+│   │   │   │   └── D3RadarChart.jsx
 │   │   │   ├── Navbar.jsx
 │   │   │   └── Footer.jsx
 │   │   ├── services/

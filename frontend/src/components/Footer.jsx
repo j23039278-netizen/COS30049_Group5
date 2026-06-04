@@ -14,14 +14,25 @@ export default function Footer() {
         : "5px solid rgba(227, 57, 70, 0.12)",
       backdropFilter: "blur(10px)",
       py: 3,
+      px: { xs: 2, sm: 4 },
       mt: 4,
       textAlign: "center",
     }}>
-      <Typography variant="body2" sx={{ 
+      <Typography sx={{
         color: isDark ? "grey.400" : "grey.600",
         letterSpacing: "0.02em",
+        fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.875rem" },
+        lineHeight: 1.8,
       }}>
-         <span style={{ color: isDark ? "#ff6b7a" : "#e63946", fontWeight: 700 }}>@ ThreatInk - 2026  |  COS30049 Group 05  |  Swinburne University of Technology</span>
+        <span style={{ color: isDark ? "#ff6b7a" : "#e63946", fontWeight: 700 }}>
+          @ ThreatInk - 2026
+        </span>
+        <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
+          {" "}|{" "}
+        </Box>
+        <Box component="span" sx={{ display: { xs: "block", sm: "inline" } }}>
+          COS30049 Group 05  |  Swinburne University of Technology
+        </Box>
       </Typography>
     </Box>
   );

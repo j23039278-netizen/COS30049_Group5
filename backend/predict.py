@@ -16,7 +16,7 @@ from scipy.sparse import hstack, csr_matrix
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODELS_DIR = os.path.join(BASE_DIR, "..", "models")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
 
 # ─── Load Models ──────────────────────────────────────────────────────────────
 print("Loading models...")

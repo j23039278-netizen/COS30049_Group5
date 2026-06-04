@@ -49,7 +49,7 @@ export default function Home() {
       minHeight: "100vh",
       background: isDark
         ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
-        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
+        : "linear-gradient(135deg, #f5f0e8 0%, #faf7f2 50%, #ffffff 100%)",
       transition: "background 0.3s ease",
       pb: 8,
     }}>

@@ -151,7 +151,8 @@ export default function Navbar({ isDarkMode, onToggleTheme }) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        p: 2,
+        px: 1.5,
+        py: 1,
         background: isDarkMode
           ? "linear-gradient(to bottom, rgba(26,26,46,0.98), rgba(15,15,30,0.98))"
           : "linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(241,244,248,0.98))",
@@ -169,7 +170,11 @@ export default function Navbar({ isDarkMode, onToggleTheme }) {
             Threat<span style={{ color: "#ef5350" }}>Ink</span>
           </Typography>
         </Box>
-        <Box sx={{ width: 40 }} />
+        <Tooltip title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+          <IconButton onClick={onToggleTheme} sx={{ color: "primary.main" }}>
+            {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
+        </Tooltip>
       </Box>
 
       <Drawer

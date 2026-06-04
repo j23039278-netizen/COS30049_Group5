@@ -14,7 +14,7 @@ const lightTheme = createTheme({
     mode: "light",
     primary: { main: "#e63946" },
     secondary: { main: "#457b9d" },
-    background: { default: "#f1f4f8", paper: "#ffffff" },
+    background: { default: "#f5f0e8", paper: "#ffffff" },
     text: { primary: "#1a1a1a", secondary: "#5a5a5a" },
     divider: "rgba(227, 57, 70, 0.12)",
   },
@@ -68,7 +68,7 @@ const darkTheme = createTheme({
 });
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const theme = isDarkMode ? darkTheme : lightTheme;
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 

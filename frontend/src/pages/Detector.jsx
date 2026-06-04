@@ -98,19 +98,20 @@ export default function Detector() {
       minHeight: "100vh",
       background: isDark
         ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
-        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
+        : "linear-gradient(135deg, #f5f0e8 0%, #faf7f2 50%, #ffffff 100%)",
       transition: "background 0.3s ease",
       py: 4,
     }}>
       <Container maxWidth="lg">
         <Typography variant="h4" fontWeight={800} sx={{
           mb: 1,
+          fontSize: { xs: "1.5rem", md: "2.125rem" },
           background: "linear-gradient(135deg, #e63946 0%, #457b9d 100%)",
           backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
           Spam Detector
         </Typography>
-        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4 }}>
+        <Typography variant="body1" color={isDark ? "grey.400" : "grey.600"} sx={{ mb: 4, fontSize: { xs: "0.9rem", md: "1rem" } }}>
           Enter any message or email to analyze it for spam content.
         </Typography>
 

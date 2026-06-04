@@ -39,7 +39,7 @@ export default function About() {
       minHeight: "100vh",
       background: isDark
         ? "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)"
-        : "linear-gradient(135deg, #f1f4f8 0%, #e8f1fa 50%, #f1f4f8 100%)",
+        : "linear-gradient(135deg, #f5f0e8 0%, #faf7f2 50%, #ffffff 100%)",
       transition: "background 0.3s ease",
       py: 4,
     }}>
@@ -106,7 +106,9 @@ export default function About() {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {modelPerf.map((m) => (
                 <Box key={m.name} sx={{
-                  flex: "1 1 calc(50% - 8px)",
+                  flex: "1 1 100%",
+                  "@media (min-width: 480px)": { flex: "1 1 calc(50% - 8px)" },
+                  "@media (min-width: 1200px)": { flex: "1 1 calc(25% - 8px)" },
                   p: { xs: 2, md: 3 },
                   borderRadius: 2,
                   bgcolor: m.best
@@ -119,9 +121,6 @@ export default function About() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  "@media (min-width: 1200px)": {
-                    flex: "1 1 calc(25% - 8px)",
-                  },
                 }}>
                   {/* Name + Best badge */}
                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, flexWrap: "wrap" }}>
@@ -157,7 +156,9 @@ export default function About() {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {techStack.map((t) => (
                 <Box key={t.category} sx={{
-                  flex: "1 1 calc(50% - 8px)",
+                  flex: "1 1 100%",
+                  "@media (min-width: 480px)": { flex: "1 1 calc(50% - 8px)" },
+                  "@media (min-width: 1200px)": { flex: "1 1 calc(25% - 8px)" },
                   p: { xs: 2, md: 3 },
                   borderRadius: 2,
                   bgcolor: "rgba(93, 173, 226, 0.08)",
@@ -165,9 +166,6 @@ export default function About() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  "@media (min-width: 1200px)": {
-                    flex: "1 1 calc(25% - 8px)",
-                  },
                 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Box sx={{ color: "#5dade2", fontSize: { xs: "1.2rem", md: "1.5rem" } }}>{t.icon}</Box>

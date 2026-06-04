@@ -90,6 +90,68 @@ export default function Detector() {
   const getRiskColor = (score) => score >= 0.7 ? "#ef5350" : score >= 0.4 ? "#ffa726" : "#66bb6a";
   const getRiskLabel = (score) => score >= 0.7 ? "High Risk" : score >= 0.4 ? "Medium Risk" : "Low Risk";
 
+  const generateExplanation = (res) => {
+    const { is_spam, confidence, risk_score, features } = res;
+    const pct = (confidence * 100).toFixed(1);
+    const { spam_keyword_count, url_count, exclaim_count, word_count } = features;
+    const parts = [];
+
+    if (is_spam) {
+      if (confidence >= 0.85)
+        parts.push(`This message was flagged as spam with high confidence (${pct}%).`);
+      else if (confidence >= 0.65)
+        parts.push(`This message was flagged as spam with moderate confidence (${pct}%).`);
+      else
+        parts.push(`This message was flagged as spam, though the model shows some uncertainty (${pct}% confidence).`);
+    } else {
+      if (confidence >= 0.85)
+        parts.push(`This message appears legitimate with high confidence (${pct}%).`);
+      else if (confidence >= 0.65)
+        parts.push(`This message is likely legitimate, though with moderate confidence (${pct}%).`);
+      else
+        parts.push(`This message was classified as legitimate, but with low confidence (${pct}%) — manual review may be helpful.`);
+    }
+
+    const obs = [];
+    if (spam_keyword_count > 0)
+      obs.push(is_spam
+        ? `${spam_keyword_count} spam-related keyword${spam_keyword_count > 1 ? "s were" : " was"} detected`
+        : `${spam_keyword_count} spam-related keyword${spam_keyword_count > 1 ? "s were" : " was"} found but the overall pattern appears legitimate`
+      );
+    if (url_count > 0)
+      obs.push(is_spam
+        ? `${url_count} URL${url_count > 1 ? "s" : ""} detected — commonly used in phishing attempts`
+        : `${url_count} URL${url_count > 1 ? "s" : ""} present but appears safe`
+      );
+    if (exclaim_count > 2)
+      obs.push(`excessive exclamation marks (${exclaim_count}) — a common spam pattern`);
+    if (word_count < 8 && is_spam)
+      obs.push(`unusually short message (${word_count} words)`);
+
+    if (obs.length > 0)
+      parts.push(`Key indicators: ${obs.join("; ")}.`);
+    else if (!is_spam)
+      parts.push("No spam indicators were detected in this message.");
+
+    if (is_spam) {
+      if (risk_score >= 0.7)
+        parts.push("The risk assessment confirms a high likelihood of spam — avoid interacting with this message.");
+      else if (risk_score >= 0.4)
+        parts.push("The risk score indicates a moderate spam probability — proceed with caution.");
+      else
+        parts.push("Despite the spam classification, the risk score remains low — spam patterns were detected but overall risk is limited.");
+    } else {
+      if (risk_score < 0.2)
+        parts.push(`The low risk score (${risk_score.toFixed(3)}) confirms this message is safe.`);
+      else if (risk_score < 0.4)
+        parts.push("The risk score is low, supporting the legitimate classification.");
+      else
+        parts.push(`Note: the risk score (${risk_score.toFixed(3)}) is somewhat elevated despite the legitimate classification — treat with care.`);
+    }
+
+    return parts.join(" ");
+  };
+
   const cardBg = isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)";
   const cardBorder = isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(239,83,80,0.1)";
 
@@ -315,6 +377,25 @@ export default function Detector() {
                       sx={{ "&:hover": { transform: "translateY(-2px)" }, transition: "all 0.3s ease" }}>
                       Export CSV
                     </Button>
+                  </Box>
+
+                  {/* Explanation */}
+                  <Divider sx={{ mt: 3, mb: 2 }} />
+                  <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>
+                    Explanation
+                  </Typography>
+                  <Box sx={{
+                    p: 2, borderRadius: 2,
+                    bgcolor: result.is_spam
+                      ? isDark ? "rgba(230,57,70,0.08)" : "rgba(230,57,70,0.06)"
+                      : isDark ? "rgba(102,187,106,0.08)" : "rgba(102,187,106,0.06)",
+                    border: `1px solid ${result.is_spam
+                      ? isDark ? "rgba(230,57,70,0.25)" : "rgba(230,57,70,0.15)"
+                      : isDark ? "rgba(102,187,106,0.25)" : "rgba(102,187,106,0.15)"}`,
+                  }}>
+                    <Typography variant="body2" color={isDark ? "grey.300" : "grey.700"} sx={{ lineHeight: 1.8 }}>
+                      {generateExplanation(result)}
+                    </Typography>
                   </Box>
                 </CardContent>
               </Card>

@@ -22,6 +22,7 @@ ThreatInk is a full-stack machine learning web application for real-time spam me
 - Interactive analytics dashboard with 4 D3.js chart types
 - Light / Dark mode toggle
 - Export results as JSON or CSV
+- **Dynamic explanation** — natural-language breakdown of why a message was classified, based on confidence, risk score, keyword count, URLs, and exclamation frequency
 - Responsive design — accessible on desktop and mobile (same WiFi)
 
 ---

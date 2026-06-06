@@ -23,7 +23,6 @@ ThreatInk is a full-stack machine learning web application for real-time spam me
 - Light / Dark mode toggle
 - Export results as JSON or CSV
 - **Dynamic explanation** — natural-language breakdown of why a message was classified, based on confidence, risk score, keyword count, URLs, and exclamation frequency
-- Responsive design — accessible on desktop and mobile (same WiFi)
 
 ---
 
@@ -130,34 +129,6 @@ npm run dev
 ```
 
 Frontend runs at: **http://localhost:5173**
-
----
-
-### 3. Mobile Access (Same WiFi Network)
-
-To access ThreatInk from a mobile device on the same WiFi:
-
-**Step 1:** Find your computer's IPv4 address:
-```bash
-ipconfig    # Windows
-```
-Example result: `192.168.100.18`
-
-**Step 2:** The frontend is already configured with `--host` flag in `package.json`, so it will show:
-```
-Local:   http://localhost:5173/
-Network: http://192.168.100.18:5173/
-```
-
-**Step 3:** Ensure `frontend/src/services/api.js` uses your IP:
-```javascript
-const BASE_URL = "http://192.168.100.18:8000";
-```
-
-**Step 4:** Open on mobile browser (same WiFi):
-```
-http://192.168.100.18:5173
-```
 
 ---
 

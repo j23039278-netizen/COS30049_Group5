@@ -3,7 +3,7 @@
 
 import axios from "axios";
 
-const BASE_URL = "http://192.168.100.18:8000";
+const BASE_URL = "http://localhost:8000";
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,

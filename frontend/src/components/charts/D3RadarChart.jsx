@@ -17,11 +17,11 @@ export default function D3RadarChart({ data, isDark }) {
       const radius  = Math.min(width, height - legendH) / 2 - 55;
       const tooltip = getGlobalTooltip();
 
-      const metrics    = ["Accuracy", "F1", "ROCAUC"];
-      const labels     = ["Accuracy", "F1 Score", "ROC-AUC"];
-      const colors     = ["#5dade2", "#57b849", "#f59e0b", "#e63946"];
+      const metrics    = ["F1", "Accuracy", "ROCAUC"];
+      const labels     = ["F1 Score", "Accuracy", "ROC-AUC"];
+      const colors     = ["#57b849", "#5dade2", "#f59e0b", "#e63946"];
       const levels     = 5;
-      const minVal     = 90;
+      const minVal     = 93;
       const maxVal     = 100;
       const angleSlice = (Math.PI * 2) / data.length;
 

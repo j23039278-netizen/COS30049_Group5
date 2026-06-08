@@ -4,6 +4,7 @@ import {
   Box, Container, Typography, TextField, Button, Card, CardContent,
   Grid, Chip, CircularProgress, Select, MenuItem, FormControl,
   InputLabel, LinearProgress, Divider, Tooltip, IconButton, useTheme,
+  Dialog, DialogTitle, DialogContent, DialogActions,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -37,6 +38,7 @@ export default function Detector() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [history, setHistory] = useState([]);
+  const [selectedHistory, setSelectedHistory] = useState(null);
 
   const handlePredict = async () => {
     if (!text.trim()) { setError("Please enter a message to analyze."); return; }
@@ -46,7 +48,17 @@ export default function Detector() {
       const res = await predictMessage(text, model);
       setResult(res.data);
       setHistory((prev) => [
-        { text: text.slice(0, 60) + (text.length > 60 ? "..." : ""), label: res.data.label, confidence: res.data.confidence, timestamp: new Date().toLocaleTimeString() },
+        {
+          text: text.slice(0, 60) + (text.length > 60 ? "..." : ""),
+          fullText: text,
+          label: res.data.label,
+          is_spam: res.data.is_spam,
+          confidence: res.data.confidence,
+          risk_score: res.data.risk_score,
+          features: res.data.features,
+          model_used: res.data.model_used,
+          timestamp: new Date().toLocaleTimeString(),
+        },
         ...prev.slice(0, 9),
       ]);
     } catch (err) {
@@ -79,12 +91,38 @@ export default function Detector() {
       ["URL Count", result.features.url_count],
       ["Spam Keywords", result.features.spam_keyword_count],
       ["Exclamations", result.features.exclaim_count],
+      ["Explanation", generateExplanation(result).replace(/,/g, " ")],
       ["Timestamp", new Date().toISOString()],
     ].map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url; a.download = "threatink_result.csv"; a.click();
+  };
+
+  const handleExportHistoryCSV = () => {
+    if (history.length === 0) return;
+    const rows = [
+      ["Timestamp", "Message", "Label", "Confidence", "Risk Score", "Model Used", "Word Count", "URL Count", "Spam Keywords", "Exclamations", "Explanation"],
+      ...history.map((h) => [
+        h.timestamp,
+        h.fullText.replace(/,/g, " "),
+        h.label,
+        (h.confidence * 100).toFixed(1) + "%",
+        h.risk_score.toFixed(4),
+        h.model_used,
+        h.features.word_count,
+        h.features.url_count,
+        h.features.spam_keyword_count,
+        h.features.exclaim_count,
+        generateExplanation(h).replace(/,/g, " "),
+      ]),
+    ];
+    const csv = rows.map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "threatink_history.csv"; a.click();
   };
 
   const getRiskColor = (score) => score >= 0.7 ? "#ef5350" : score >= 0.4 ? "#ffa726" : "#66bb6a";
@@ -258,11 +296,23 @@ export default function Detector() {
             {history.length > 0 && (
               <Card sx={{ bgcolor: isDark ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.5)", border: cardBorder }}>
                 <CardContent>
-                  <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2 }}>Recent Analyses</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+                    <Typography variant="subtitle1" fontWeight={700}>Recent Analyses</Typography>
+                    <Button
+                      size="small" variant="outlined" color="secondary" startIcon={<DownloadIcon />}
+                      onClick={handleExportHistoryCSV}
+                      sx={{ "&:hover": { transform: "translateY(-2px)" }, transition: "all 0.3s ease" }}
+                    >
+                      Export CSV
+                    </Button>
+                  </Box>
                   {history.map((h, i) => (
-                    <Box key={i} sx={{
-                      display: "flex", alignItems: "center", gap: 2, py: 1,
+                    <Box key={i} onClick={() => setSelectedHistory(h)} sx={{
+                      display: "flex", alignItems: "center", gap: 2, py: 1, px: 1,
+                      borderRadius: 1.5, cursor: "pointer",
                       borderBottom: isDark ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(0,0,0,0.05)",
+                      transition: "background 0.2s ease",
+                      "&:hover": { bgcolor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.03)" },
                     }}>
                       <Chip label={h.label} color={h.label === "spam" ? "error" : "success"} size="small" />
                       <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"} sx={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -403,6 +453,102 @@ export default function Detector() {
           </Box>
         </Box>
       </Container>
+
+      {/* History detail dialog */}
+      <Dialog
+        open={!!selectedHistory}
+        onClose={() => setSelectedHistory(null)}
+        maxWidth="sm" fullWidth
+        PaperProps={{ sx: { bgcolor: isDark ? "#1a1a2e" : "#fff", backgroundImage: "none" } }}
+      >
+        {selectedHistory && (
+          <>
+            <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              {selectedHistory.is_spam
+                ? <WarningAmberIcon sx={{ fontSize: 32, color: "#ef5350" }} />
+                : <CheckCircleIcon sx={{ fontSize: 32, color: "#66bb6a" }} />}
+              <Box>
+                <Typography variant="h6" fontWeight={800} color={selectedHistory.is_spam ? "error" : "success.main"}>
+                  {selectedHistory.is_spam ? "SPAM" : "LEGITIMATE"}
+                </Typography>
+                <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>
+                  {selectedHistory.timestamp} · Model: {selectedHistory.model_used.replace(/_/g, " ")}
+                </Typography>
+              </Box>
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>Message</Typography>
+              <Box sx={{
+                p: 2, mb: 3, borderRadius: 2,
+                bgcolor: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
+              }}>
+                <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                  {selectedHistory.fullText}
+                </Typography>
+              </Box>
+
+              <Box sx={{ mb: 2 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+                  <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>Confidence</Typography>
+                  <Typography variant="body2" fontWeight={700}>{(selectedHistory.confidence * 100).toFixed(1)}%</Typography>
+                </Box>
+                <LinearProgress variant="determinate" value={selectedHistory.confidence * 100}
+                  color={selectedHistory.is_spam ? "error" : "success"} sx={{ height: 8, borderRadius: 4 }} />
+              </Box>
+
+              <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+                  <Typography variant="body2" color={isDark ? "grey.400" : "grey.600"}>Risk Score</Typography>
+                  <Chip label={getRiskLabel(selectedHistory.risk_score)} size="small"
+                    sx={{ bgcolor: getRiskColor(selectedHistory.risk_score), color: "white", fontWeight: 700 }} />
+                </Box>
+                <LinearProgress variant="determinate" value={selectedHistory.risk_score * 100}
+                  sx={{ height: 8, borderRadius: 4, "& .MuiLinearProgress-bar": { bgcolor: getRiskColor(selectedHistory.risk_score) } }} />
+                <Typography variant="caption" color="grey.500">{selectedHistory.risk_score.toFixed(4)}</Typography>
+              </Box>
+
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>Feature Analysis</Typography>
+              <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+                {[
+                  { label: "Words",         value: selectedHistory.features.word_count },
+                  { label: "URLs",           value: selectedHistory.features.url_count },
+                  { label: "Spam Keywords",  value: selectedHistory.features.spam_keyword_count },
+                  { label: "Exclamations",   value: selectedHistory.features.exclaim_count },
+                ].map((f) => (
+                  <Box key={f.label} sx={{
+                    flex: 1, minWidth: 80,
+                    bgcolor: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
+                    borderRadius: 2, p: 1.5, textAlign: "center",
+                  }}>
+                    <Typography variant="h6" fontWeight={700}>{Math.round(f.value)}</Typography>
+                    <Typography variant="caption" color={isDark ? "grey.400" : "grey.600"}>{f.label}</Typography>
+                  </Box>
+                ))}
+              </Box>
+
+              <Divider sx={{ mt: 3, mb: 2 }} />
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>Explanation</Typography>
+              <Box sx={{
+                p: 2, borderRadius: 2,
+                bgcolor: selectedHistory.is_spam
+                  ? isDark ? "rgba(230,57,70,0.08)" : "rgba(230,57,70,0.06)"
+                  : isDark ? "rgba(102,187,106,0.08)" : "rgba(102,187,106,0.06)",
+                border: `1px solid ${selectedHistory.is_spam
+                  ? isDark ? "rgba(230,57,70,0.25)" : "rgba(230,57,70,0.15)"
+                  : isDark ? "rgba(102,187,106,0.25)" : "rgba(102,187,106,0.15)"}`,
+              }}>
+                <Typography variant="body2" color={isDark ? "grey.300" : "grey.700"} sx={{ lineHeight: 1.8 }}>
+                  {generateExplanation(selectedHistory)}
+                </Typography>
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setSelectedHistory(null)}>Close</Button>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </Box>
   );
 }

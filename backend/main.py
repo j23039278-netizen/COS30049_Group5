@@ -7,8 +7,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
-import pandas as pd
-import os
 from predict import predict, MODEL_MAP
 
 # ─── App Setup ────────────────────────────────────────────────────────────────
@@ -127,48 +125,27 @@ def predict_batch(request: BatchPredictRequest):
 def get_stats():
     """GET - Returns dataset statistics for dashboard charts"""
     try:
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        data_path = os.path.join(BASE_DIR, "..", "data", "spam_processed.csv")
-        df = pd.read_csv(data_path)
-
-        # Class distribution
-        class_dist = df["spam"].value_counts().to_dict()
-
-        # Average feature stats by class
-        feature_cols = ["char_count", "word_count", "exclaim_count",
-                        "dollar_count", "upper_ratio", "url_count",
-                        "avg_word_len", "spam_keyword_count"]
-
-        available_cols = [c for c in feature_cols if c in df.columns]
-        avg_features = {}
-        if available_cols:
-            avg_features = df.groupby("spam")[available_cols].mean().round(3).to_dict()
-
-        # Top spam keywords (static from training)
-        top_keywords = [
-            {"keyword": "win",    "spam": 28500, "ham": 800},
-            {"keyword": "offer",  "spam": 22000, "ham": 1200},
-            {"keyword": "free",   "spam": 20000, "ham": 1500},
-            {"keyword": "click",  "spam": 18000, "ham": 900},
-            {"keyword": "deal",   "spam": 15000, "ham": 700},
-            {"keyword": "claim",  "spam": 14000, "ham": 400},
-            {"keyword": "cash",   "spam": 12000, "ham": 300},
-            {"keyword": "credit", "spam": 10000, "ham": 600},
-        ]
-
         return {
             "class_distribution": {
-                "ham":  int(class_dist.get(0, 0)),
-                "spam": int(class_dist.get(1, 0)),
-                "total": len(df)
+                "ham": 48381,
+                "spam": 45917,
+                "total": 94298
             },
-            "avg_features_by_class": avg_features,
-            "top_spam_keywords": top_keywords,
+            "top_spam_keywords": [
+                {"keyword": "win",    "spam": 28500, "ham": 800},
+                {"keyword": "offer",  "spam": 22000, "ham": 1200},
+                {"keyword": "free",   "spam": 20000, "ham": 1500},
+                {"keyword": "click",  "spam": 18000, "ham": 900},
+                {"keyword": "deal",   "spam": 15000, "ham": 700},
+                {"keyword": "claim",  "spam": 14000, "ham": 400},
+                {"keyword": "cash",   "spam": 12000, "ham": 300},
+                {"keyword": "credit", "spam": 10000, "ham": 600},
+            ],
             "model_performance": {
-                "naive_bayes":          {"accuracy": 0.9341, "f1": 0.9335, "roc_auc": 0.9868},
-                "logistic_regression":  {"accuracy": 0.9651, "f1": 0.9643, "roc_auc": 0.9950},
-                "linear_svm":           {"accuracy": 0.9691, "f1": 0.9683, "roc_auc": 0.9956},
-                "random_forest":        {"accuracy": 0.9746, "f1": 0.9740, "roc_auc": 0.9965},
+                "naive_bayes":         {"accuracy": 0.9341, "f1": 0.9335, "roc_auc": 0.9868},
+                "logistic_regression": {"accuracy": 0.9651, "f1": 0.9643, "roc_auc": 0.9950},
+                "linear_svm":          {"accuracy": 0.9691, "f1": 0.9683, "roc_auc": 0.9956},
+                "random_forest":       {"accuracy": 0.9746, "f1": 0.9740, "roc_auc": 0.9965},
             }
         }
     except Exception as e:

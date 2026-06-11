@@ -3,19 +3,20 @@
 **COS30049 Computing Technology Innovation Project**
 **CI Group 05 | Section C1 | 2026 Semester 3**
 
-| Student Name | Swinburne ID |
-|---|---|
-| Yan Min Xuan Shanice | 106214470 |
-| Soh Way Miin | 105967029 |
-| Tan Jun Xiong | 105971619 |
+|Student Name        |Swinburne ID|
+|--------------------|------------|
+|Yan Min Xuan Shanice|106214470   |
+|Soh Way Miin        |105967029   |
+|Tan Jun Xiong       |105971619   |
 
----
+-----
 
 ## Project Overview
 
 ThreatInk is a full-stack machine learning web application for real-time spam message detection. It integrates a React.js frontend with a FastAPI backend, powered by four machine learning models trained on 94,298 email and SMS records.
 
 **Features:**
+
 - Real-time spam/ham classification with confidence scores
 - Risk scoring (0.0 – 1.0) using Gradient Boosting regressor
 - Four ML models: Random Forest (97.46%), Linear SVM, Logistic Regression, Naive Bayes
@@ -24,7 +25,7 @@ ThreatInk is a full-stack machine learning web application for real-time spam me
 - Export results as JSON or CSV
 - **Dynamic explanation** — natural-language breakdown of why a message was classified, based on confidence, risk score, keyword count, URLs, and exclamation frequency
 
----
+-----
 
 ## Project Structure
 
@@ -78,19 +79,21 @@ COS30049_Group5/
 └── ReadMe.md
 ```
 
----
+-----
 
 ## Requirements
 
 ### Backend
-- Python 3.12+
+
+- Python 3.12 (**must use 3.12 — other versions may cause dependency conflicts**)
 - pip
 
 ### Frontend
+
 - Node.js v20+
 - npm 10+
 
----
+-----
 
 ## Setup & Running Instructions
 
@@ -100,20 +103,22 @@ COS30049_Group5/
 # Navigate to backend folder
 cd backend
 
-# Install Python dependencies
-pip install -r requirements.txt
+# Install Python dependencies (must use Python 3.12)
+py -3.12 -m pip install -r requirements.txt
 
 # Download NLTK data (first time only)
-python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('punkt_tab')"
+py -3.12 -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('punkt_tab')"
 
 # Start the backend server
-uvicorn main:app --reload --host 0.0.0.0
+py -3.12 -m uvicorn main:app --reload --host 0.0.0.0
 ```
 
-Backend runs at: **http://127.0.0.1:8000**
-API documentation: **http://127.0.0.1:8000/docs**
+> ⚠️ **Important:** Use `py -3.12` explicitly to ensure Python 3.12 is used. Running `pip` or `uvicorn` directly may invoke a different Python version and cause dependency failures.
 
----
+Backend runs at: **<http://127.0.0.1:8000>**
+API documentation: **<http://127.0.0.1:8000/docs>**
+
+-----
 
 ### 2. Frontend Setup
 
@@ -128,24 +133,27 @@ npm install
 npm run dev
 ```
 
-Frontend runs at: **http://localhost:5173**
+Frontend runs at: **<http://localhost:5173>**
 
----
+> ⚠️ **Important:** Use **Google Chrome** for the best experience. Microsoft Edge may cause CORS caching issues with this application.
+
+-----
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | Health check |
-| GET | `/models` | List available ML models |
-| GET | `/stats` | Dashboard statistics |
-| POST | `/predict` | Single message prediction |
-| POST | `/predict/batch` | Batch prediction (max 50) |
-| DELETE | `/cache` | Clear server cache |
+|Method|Endpoint        |Description              |
+|------|----------------|-------------------------|
+|GET   |`/`             |Health check             |
+|GET   |`/models`       |List available ML models |
+|GET   |`/stats`        |Dashboard statistics     |
+|POST  |`/predict`      |Single message prediction|
+|POST  |`/predict/batch`|Batch prediction (max 50)|
+|DELETE|`/cache`        |Clear server cache       |
 
 ### Example: POST /predict
 
 **Request:**
+
 ```json
 {
   "text": "Congratulations! You've won a free iPhone. Click here now!",
@@ -154,6 +162,7 @@ Frontend runs at: **http://localhost:5173**
 ```
 
 **Response:**
+
 ```json
 {
   "label": "spam",
@@ -172,36 +181,37 @@ Frontend runs at: **http://localhost:5173**
 }
 ```
 
----
+-----
 
 ## AI Model Integration
 
 Models trained in Assignment 2 on 94,298 records (emails + SMS):
 
-| Model | Accuracy | F1 Score | ROC-AUC |
-|---|---|---|---|
-| Random Forest ⭐ | 97.46% | 0.9740 | 0.9965 |
-| Linear SVM | 96.91% | 0.9683 | 0.9956 |
-| Logistic Regression | 96.51% | 0.9643 | 0.9950 |
-| Naive Bayes | 93.41% | 0.9335 | 0.9868 |
+|Model              |Accuracy|F1 Score|ROC-AUC|
+|-------------------|--------|--------|-------|
+|Random Forest ⭐    |97.46%  |0.9740  |0.9965 |
+|Linear SVM         |96.91%  |0.9683  |0.9956 |
+|Logistic Regression|96.51%  |0.9643  |0.9950 |
+|Naive Bayes        |93.41%  |0.9335  |0.9868 |
 
 **Prediction pipeline:**
-1. Lowercase, HTML removal, URL → `url` token
-2. Punctuation removal, NLTK stopword filtering
-3. Porter Stemmer stemming
-4. TF-IDF vectorization (5,000 features)
-5. Classification → label + confidence
-6. Gradient Boosting → risk score
-7. K-Means + LSA → cluster assignment
 
----
+1. Lowercase, HTML removal, URL → `url` token
+1. Punctuation removal, NLTK stopword filtering
+1. Porter Stemmer stemming
+1. TF-IDF vectorization (5,000 features)
+1. Classification → label + confidence
+1. Gradient Boosting → risk score
+1. K-Means + LSA → cluster assignment
+
+-----
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React.js, Vite, Material UI, D3.js v7, Axios, React Router |
-| Backend | FastAPI, Python 3.12, Uvicorn, Pydantic, Joblib |
-| ML | Scikit-learn, NLTK, Pandas, NumPy |
+|Layer   |Technology                                                |
+|--------|----------------------------------------------------------|
+|Frontend|React.js, Vite, Material UI, D3.js v7, Axios, React Router|
+|Backend |FastAPI, Python 3.12, Uvicorn, Pydantic, Joblib           |
+|ML      |Scikit-learn, NLTK, Pandas, NumPy                         |
 
----
+-----
